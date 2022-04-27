@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main-admin')
 @section('title', 'Add Data Genre')
 @section('content')
     <h2>Add data genre</h2>

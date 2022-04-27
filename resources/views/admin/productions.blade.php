@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main-admin')
 @section('title', 'Data Productions')
 @section('content')
     <h2>Data Production</h2>
@@ -22,7 +22,7 @@
                         </a>
                     </div>
 
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <div class='delete_status'>
                             <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                                 <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
@@ -41,7 +41,7 @@
                                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="col-3 ms-auto">
                         <form action="" method="POST" class="input-group input-group-sm">

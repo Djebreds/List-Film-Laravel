@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main-admin')
 @section('title', 'Data Films')
 
 
@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="hstack gap-2 mb-3">
                     <div class="col me-auto">
-                        <a href="/films/add-film" type="button" class="button btn btn-success">
+                        <a href="{{ url('films/add-film') }}" type="button" class="button btn btn-success">
                             <span class="button__icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     viewBox="0 0 640 512">
@@ -35,7 +35,7 @@
                         </a>
                     </div>
 
-                    <div class="col-6">
+                    {{-- <div class="col-6">
                         <div class="delete_status">
                             <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                                 <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
@@ -54,14 +54,16 @@
                                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                     <div class="col-3 ms-auto">
-                        <form action="" method="POST" class="input-group input-group-sm">
-                            <input type="text" class="form-control form-control-sm text-secondary" name="searchInput"
-                                placeholder="search..." aria-label="search..." value="" aria-describedby="button-addon2">
-                            <button class="btn btn-primary" type="submit" name="searchButton" id="button-addon2"><svg
+                        <form action="{{ url('films') }}" class="input-group input-group-sm">
+                            {{-- {{ csrf_field() }} --}}
+                            <input type="text" class="form-control form-control-sm text-secondary" name="search"
+                                placeholder="search..." aria-label="search..." value="{{ request('search') }}"
+                                aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="submit" id="button-addon2"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-search" viewBox="0 0 16 16">
                                     <path
@@ -82,146 +84,145 @@
                     <th scope="col">Action</th>
                 </tr>
 
-                @foreach ($films as $index => $film)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $film->title }}</td>
-                        <td>{{ $film->genre_name }}</td>
-                        <td>{{ $film->name_production }}</td>
-                        <td>{{ $film->release_date }}</td>
-                        <td>{{ $film->name_director }}</td>
-                        <td>
-                            <a href="detail-film.php?id_film=" class=" btn btn-success btn-sm text-center"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                                    class="bi bi-eye-fill" viewBox="0 0 18 18">
-                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                    <path
-                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                                </svg></a>
-                            <div class="btn-group btn-group-sm">
+                @if ($films->isNotEmpty())
+                    @foreach ($films as $index => $film)
+                        <tr>
+                            <td>{{ $films->firstItem() + $index }}</td>
+                            <td>{{ $film->title }}</td>
+                            <td>{{ $film->genre_name }}</td>
+                            <td>{{ $film->name_production }}</td>
+                            <td>{{ $film->release_date }}</td>
+                            <td>{{ $film->name_director }}</td>
+                            <td>
+                                <a href="detail-film.php?id_film=" class=" btn btn-success btn-sm text-center"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        class="bi bi-eye-fill" viewBox="0 0 18 18">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                        <path
+                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                    </svg></a>
                                 <div class="btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-primary dropdown-toggle btn-sm"
-                                        id="dropdownMenuClickableOutside" data-bs-toggle="dropdown">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                                            class="bi bi-pencil-fill" viewBox="0 0 18 18">
-                                            <path
-                                                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                        </svg>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end drop-menu"
-                                        aria-labelledby="dropdownMenuClickableOutside">
-                                        <li>
-                                            <p class="dropdown-header drop">Are you sure want to edit ?</p>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li>
-                                            <div class="row mx-auto">
-                                                <div class="col-5 ">
-                                                    <a href="update-film.php?id_film=?>"
-                                                        class="dropdown-item text-center text-danger px-2">Yes</a>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="d-flex" style="height: 25px;">
-                                                        <div class="vr"></div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-primary dropdown-toggle btn-sm"
+                                            id="dropdownMenuClickableOutside" data-bs-toggle="dropdown">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 18 18">
+                                                <path
+                                                    d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                            </svg>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end drop-menu"
+                                            aria-labelledby="dropdownMenuClickableOutside">
+                                            <li>
+                                                <p class="dropdown-header drop">Are you sure want to edit ?</p>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <div class="row mx-auto">
+                                                    <div class="col-5 ">
+                                                        <a href="update-film.php?id_film=?>"
+                                                            class="dropdown-item text-center text-danger px-2">Yes</a>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <div class="d-flex" style="height: 25px;">
+                                                            <div class="vr"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <a href="#"
+                                                            class="dropdown-item text-center text-primary px-2">No</a>
                                                     </div>
                                                 </div>
-                                                <div class="col-5">
-                                                    <a href="#" class="dropdown-item text-center text-primary px-2">No</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="vr"></div>
-                            <div class="btn-group btn-group-sm">
+                                <div class="vr"></div>
                                 <div class="btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-danger dropdown-toggle btn-sm"
-                                        id="dropdownMenuClickableOutside" data-bs-toggle="dropdown">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                                            class="bi bi-trash-fill" viewBox="0 0 18 18">
-                                            <path
-                                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                        </svg>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end drop-menu"
-                                        aria-labelledby="dropdownMenuClickableOutside">
-                                        <li>
-                                            <p class="dropdown-header drop">Are you sure to delete ?</p>
-                                        </li>
-                                        <li>
-                                            <hr class="dropdown-divider">
-                                        </li>
-                                        <li>
-                                            <div class="row mx-auto">
-                                                <div class="col-5 ">
-                                                    <a href="delete-film.php?id_film="
-                                                        class="dropdown-item text-center text-danger px-2">Yes</a>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="d-flex" style="height: 25px;">
-                                                        <div class="vr"></div>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-danger dropdown-toggle btn-sm"
+                                            id="dropdownMenuClickableOutside" data-bs-toggle="dropdown">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 18 18">
+                                                <path
+                                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end drop-menu"
+                                            aria-labelledby="dropdownMenuClickableOutside">
+                                            <li>
+                                                <p class="dropdown-header drop">Are you sure to delete ?</p>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <div class="row mx-auto">
+                                                    <div class="col-5 ">
+                                                        <a href="delete-film.php?id_film="
+                                                            class="dropdown-item text-center text-danger px-2">Yes</a>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <div class="d-flex" style="height: 25px;">
+                                                            <div class="vr"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-5">
+                                                        <a href="#"
+                                                            class="dropdown-item text-center text-primary px-2">No</a>
                                                     </div>
                                                 </div>
-                                                <div class="col-5">
-                                                    <a href="#" class="dropdown-item text-center text-primary px-2">No</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                    </tr>
-                @endforeach
-
+                        </tr>
+                    @endforeach
+                @else
+                    <p class="text-secondary text-center fw-bold">!! Data no found !!</p>
+                @endif
             </table>
+            @if (request('search'))
+                <p class="text-secondary " style="font-weight:700; font-family: 'Nunito', sans-serif; font-size: 13px;">
+                    Founded data : {{ count($films) }} </p>
+                <a href="{{ url('films') }}" type="button" class="button btn btn-primary">
+                    <span class="button__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            viewBox="0 0 576 512">
+                            <path
+                                d="M279.6 160.4C282.4 160.1 285.2 160 288 160C341 160 384 202.1 384 256C384 309 341 352 288 352C234.1 352 192 309 192 256C192 253.2 192.1 250.4 192.4 247.6C201.7 252.1 212.5 256 224 256C259.3 256 288 227.3 288 192C288 180.5 284.1 169.7 279.6 160.4zM480.6 112.6C527.4 156 558.7 207.1 573.5 243.7C576.8 251.6 576.8 260.4 573.5 268.3C558.7 304 527.4 355.1 480.6 399.4C433.5 443.2 368.8 480 288 480C207.2 480 142.5 443.2 95.42 399.4C48.62 355.1 17.34 304 2.461 268.3C-.8205 260.4-.8205 251.6 2.461 243.7C17.34 207.1 48.62 156 95.42 112.6C142.5 68.84 207.2 32 288 32C368.8 32 433.5 68.84 480.6 112.6V112.6zM288 112C208.5 112 144 176.5 144 256C144 335.5 208.5 400 288 400C367.5 400 432 335.5 432 256C432 176.5 367.5 112 288 112z" />
+                        </svg>
+                    </span>
+                    <span class="button__text"> Show all </span>
+                </a>
+            @endif
 
-            <p class="text-secondary text-center fw-bold">" Data no found "</p>
 
-
-            <p class="text-secondary " style="font-weight:700; font-family: 'Nunito', sans-serif; font-size: 13px;">Founded
-                data : </p>
-            <form action="" method="POST">
-                <button type="submit" name="showAll" class="btn btn-primary btn-sm">Show all</button>
-            </form>
-
+            {{-- @include('pagination.default', ['paginator' => $films])
+            {{ $films->render('pagination::bootstrap-5') }}
             <div class="row">
                 <nav aria-label="...">
-                    <ul class="pagination pagination-sm">
-
-                        {{-- <li class="page-item">
-                            <a class="page-link" href="?page=">Previous</a>
-                        </li> --}}
-
-                        <li class="page-item disabled">
-                            <a class="page-link" href="?page=">Previous</a>
-                        </li>
-
-
-
-                        <li class="page-item active">
-                            <a class="page-link " href="?page=">1</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link " href="?page=">2</a>
-                        </li>
-
-
-                        {{-- <li class="page-item">
-                            <a class="page-link" href="?page=">Next</a>
-                        </li> --}}
-
-                        <li class="page-item disabled">
-                            <a class="page-link" href="?page=">Next</a>
-                        </li>
-
-                    </ul>
+                    @if ($films->lastPage() > 1)
+                        <ul class="pagination pagination-sm">
+                            <li class="page-item {{ $films->currentPage() == 1 ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ $films->url(1) }}">Previous</a>
+                            </li>
+                            @for ($i = 1; $i <= $films->currentPage(); $i++)
+                                <li class="page-item {{ $films->currentPage() == $i ? 'active' : '' }}"><a
+                                        class="page-link" href="{{ $films->url($i) }}">{{ $i }}</a>
+                                </li>
+                            @endfor
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    @endif
                 </nav>
-            </div>
+            </div> --}}
+            {{ $films->links('layouts.pagination') }}
 
         </div>
     </div>

@@ -1,13 +1,13 @@
     
-    // side bar active link
-    const currentLocation = location.href;
-    const menuItem = document.querySelectorAll('#list-item a');
-    const menuLength = menuItem.length
-    for (let i = 0; i < menuLength; i++) {
-        if (menuItem[i].href === currentLocation) {
-            menuItem[i].className = "active"
-        }
-    };
+    // // side bar active link
+    // const currentLocation = location.href;
+    // const menuItem = document.querySelectorAll('#list-item a');
+    // const menuLength = menuItem.length
+    // for (let i = 0; i < menuLength; i++) {
+    //     if (menuItem[i].href === currentLocation) {
+    //         menuItem[i].className = "active"
+    //     }
+    // };
 
     // bootstrap tooltip
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

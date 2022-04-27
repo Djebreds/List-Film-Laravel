@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main-admin')
 @section('title', 'Add Data Production')
 @section('content')
     <h2>Add data production</h2>

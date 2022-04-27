@@ -278,3 +278,7 @@
             -webkit-appearance: none;
             -moz-appearance: none;
         }
+
+        .showall a {
+            background-color: #0d6efd;
+        }
