@@ -12,7 +12,7 @@
                             <div class="col-9">
                                 <div class="status-film">
                                     <h6 class="card-title count">COUNT DATA FILMS</h6>
-                                    <p class="status">Films</p>
+                                    <p class="status">{{ $films }} Films</p>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -30,7 +30,7 @@
                             <div class="col-9">
                                 <div class="status-film">
                                     <h6 class="card-title count">COUNT DATA GENRES</h6>
-                                    <p class="status">Genres</p>
+                                    <p class="status">{{ $genres }} Genres</p>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -48,7 +48,7 @@
                             <div class="col-9">
                                 <div class="status-film">
                                     <h6 class="card-title count">COUNT DATA PRODUCTIONS</h6>
-                                    <p class="status"> Productions</p>
+                                    <p class="status">{{ $productions }} Productions</p>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -66,7 +66,7 @@
                             <div class="col-9">
                                 <div class="status-film">
                                     <h6 class="card-title count">COUNT DATA DIRECTORS</h6>
-                                    <p class="status"> Directors</p>
+                                    <p class="status">{{ $directors }} Directors</p>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -93,7 +93,7 @@
                                 <th scope="col">Release Date</th>
                                 <th scope="col">Director</th>
                             </tr>
-                            @foreach ($films as $index => $film)
+                            @foreach ($films_limit as $index => $film)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $film->title }}</td>
@@ -120,7 +120,7 @@
                                 <th scope="col">Name </th>
                                 <th scope="col">About</th>
                             </tr>
-                            @foreach ($directors as $index => $director)
+                            @foreach ($directors_limit as $index => $director)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $director->name_director }}</td>
@@ -157,7 +157,7 @@
                                 <th scope="col">Name Company</th>
                                 <th scope="col">Founded Date</th>
                             </tr>
-                            @foreach ($productions as $index => $production)
+                            @foreach ($productions_limit as $index => $production)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $production->name_production }}</td>

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Directors;
 
 class DirectorsController extends Controller
 {
 
     public function index()
     {
-        $directors = DB::table('directors')->get();
+        $directors = Directors::paginate(10);
         return view('admin.directors', compact('directors'));
     }
 
