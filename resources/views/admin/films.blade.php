@@ -91,11 +91,12 @@
                             <td>{{ $film->title }}</td>
                             <td>{{ $film->genre_name }}</td>
                             <td>{{ $film->name_production }}</td>
-                            <td>{{ $film->release_date }}</td>
+                            <td>{{ date('d M Y', strtotime($film->release_date)) }}</td>
                             <td>{{ $film->name_director }}</td>
                             <td>
-                                <a href="detail-film.php?id_film=" class=" btn btn-success btn-sm text-center"
-                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Views detail data"><svg
+                                <a href="{{ url("films/detail-film/$film->id_film ") }}"
+                                    class=" btn btn-success btn-sm text-center" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="Views detail data"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                                         class="bi bi-eye-fill" viewBox="0 0 18 18">
                                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />

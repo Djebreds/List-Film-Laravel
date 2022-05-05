@@ -68,7 +68,7 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $production->name_production }}</td>
-                        <td>{{ $production->founded_date }}</td>
+                        <td>{{ date('d M Y', strtotime($production->founded_date)) }}</td>
                         <td>
                             <div class="btn-group btn-group-sm">
                                 <div class="btn-group btn-group-sm">

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Films extends Model
 {
+    protected $primaryKey = 'id_film';
     use HasFactory;
 }

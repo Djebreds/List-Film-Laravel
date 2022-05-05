@@ -99,7 +99,7 @@
                                     <td>{{ $film->title }}</td>
                                     <td>{{ $film->genre_name }}</td>
                                     <td>{{ $film->name_production }}</td>
-                                    <td>{{ $film->release_date }}</td>
+                                    <td>{{ date('d M Y', strtotime($film->release_date)) }}</td>
                                     <td>{{ $film->name_director }}</td>
                                 </tr>
                             @endforeach
@@ -161,7 +161,7 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $production->name_production }}</td>
-                                    <td>{{ $production->founded_date }}</td>
+                                    <td>{{ date('d M Y', strtotime($production->founded_date)) }}</td>
                                 </tr>
                             @endforeach
                         </table>

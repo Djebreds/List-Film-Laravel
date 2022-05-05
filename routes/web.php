@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DirectorsController;
+use App\Http\Controllers\DirectorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GenreController;
@@ -11,24 +11,41 @@ use App\Http\Controllers\ProductionController;
 Route::get('/', [DashboardController::class, 'index']);
 
 // Films Route
-Route::get('/films', [FilmController::class, 'index']);
-Route::get('/films/add-film', [FilmController::class, 'create']);
-Route::post('/films/add-film', [FilmController::class, 'store']);
+Route::controller(FilmController::class)->group(function () {
+    Route::get('/films', 'index');
+    Route::get('/films/add-film', 'create');
+    Route::post('/films/add-film', 'store');
+    Route::get('/films/detail-film/{id_film}', 'show');
+});
+
+// Route::get('/films', [FilmController::class, 'index']);
+// Route::get('/films/add-film', [FilmController::class, 'create']);
+// Route::post('/films/add-film', [FilmController::class, 'store']);
+// Route::get('/films/detail-film/{id_film}', [FilmController::class, 'show']);
 
 // Genres Route
-Route::get('/genres', [GenreController::class, 'index']);
-Route::get('/genres/add-genre', [GenreController::class, 'create']);
-Route::post('/genres/add-genre', [GenreController::class, 'store']);
+Route::controller(GenreController::class)->group(function(){
+    Route::get('/genres', 'index');
+    Route::get('/genres/add-genre', 'create');
+    Route::post('/genres/add-genre', 'store');
+});
+
 
 // Productions Route
-Route::get('/productions', [ProductionController::class, 'index']);
-Route::get('/productions/add-production', [ProductionController::class, 'create']);
-Route::post('/productions/add-production', [GenreController::class, 'store']);
+Route::controller(ProductionController::class)->group(function () {
+    Route::get('/productions',  'index');
+    Route::get('/productions/add-production', 'create');
+    Route::post('/productions/add-production', 'store');
+});
+
 
 // Directors Route
-Route::get('/directors', [DirectorsController::class, 'index']);
-Route::get('/directors/add-director', [DirectorsController::class, 'create']);
-Route::post('/directors/add-director', [DirectorsController::class, 'store']);
+Route::controller(DirectorController::class)->group(function () {
+    Route::get('/directors', 'index');
+    Route::get('/directors/add-director', 'create');
+    Route::post('/directors/add-director', 'store');
+});
+
 
 // * Routing for public users * //
 Route::get('/list-film', function () {
