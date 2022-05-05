@@ -165,7 +165,7 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-    <script src="assets/js/script-admin-panel.js"></script>
+    <script src="{{ URL::asset('assets/js/script-admin-panel.js') }}"></script>
 
 </body>
 

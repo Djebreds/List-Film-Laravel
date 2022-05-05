@@ -14,14 +14,10 @@ Route::get('/', [DashboardController::class, 'index']);
 Route::controller(FilmController::class)->group(function () {
     Route::get('/films', 'index');
     Route::get('/films/add-film', 'create');
-    Route::post('/films/add-film', 'store');
+    Route::post('/films', 'store');
     Route::get('/films/detail-film/{id_film}', 'show');
-});
 
-// Route::get('/films', [FilmController::class, 'index']);
-// Route::get('/films/add-film', [FilmController::class, 'create']);
-// Route::post('/films/add-film', [FilmController::class, 'store']);
-// Route::get('/films/detail-film/{id_film}', [FilmController::class, 'show']);
+});
 
 // Genres Route
 Route::controller(GenreController::class)->group(function(){

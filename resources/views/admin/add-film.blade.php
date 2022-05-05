@@ -9,24 +9,8 @@
                 <div class="card-header text-primary fw-bold">
                     Film
                 </div>
-                {{-- if some cases --}}
                 <div class="card-body">
-                    <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
-                        <symbol id='exclamation-triangle-fill' fill='currentColor' viewBox='0 0 16 16'>
-                            <path
-                                d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z' />
-                        </symbol>
-                    </svg>
-                    <div class='alert alert-danger d-flex alert-dismissible fade show' role='alert'>
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-                            <use xlink:href="#exclamation-triangle-fill" />
-                        </svg>
-                        <div>
-                            <b>Have some trouble</b>. Failed to add Film
-                        </div>
-                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                    </div>
-                    {{-- else some cases --}}
+                    @if(session()->has('success'))
                     <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                         <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
                             <path
@@ -38,13 +22,13 @@
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            Film added successfully. <a href='maintable-panel.php' class='alert-link'>See for more</a>.
+                            {{ session('success') }}<a href='{{ url('films') }}' class='alert-link'>See for more</a>.
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>
-                    {{-- end --}}
+                    @endif
 
-                    <form action="" method="POST" enctype="multipart/form-data" class="form-control  pt-4 needs-validation"
+                    <form action="{{ url('films') }}" method="POST" enctype="multipart/form-data" class="form-control  pt-4 "
                         novalidate>
                         @csrf
                         <div class="row justify-content-center">
@@ -54,37 +38,53 @@
                             <div class="col-3">
                                 <div class="mb-3 pt-2">
                                     <p class="form-label form-label-sm text-center">Upload poster</p>
-                                    <input class="form-control form-control-sm" id="formFileSm" name="picture" type="file"
+                                    <input class="form-control form-control-sm @error('picture') is-invalid @enderror " id="formFileSm" name="picture" type="file"
                                         onchange="readURL(this);" required>
+                                    @error('picture')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
+                        @method('POST')
+                        <div class="row justify-content-center">
                             <div class="row">
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="title" class="form-label form-label-sm">Title</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control form-control-sm" name="title" id="title"
-                                                required>
+                                            <input type="text" class="form-control form-control-sm @error('title') is-invalid @enderror" name="title" id="title"
+                                                required value="{{ old('title') }}">
+                                            @error('title')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label for="" class="form-label form-label-sm">Genre</label>
-                                        <div class="col-sm-7 mb-3">
+                                        <label class="form-label form-label-sm">Genre</label>
+                                        <div class="col-sm-7 mb-2">
                                             <div class="row">
+                                                @foreach($genres as $key => $genre)
                                                 <div class="col-6">
                                                     <div class="form-check">
-                                                        <input type="hidden" name="genre_id" value="">
-                                                        <input class="form-check-input {genres[]:true}" type="checkbox"
-                                                            value="" name="genres[]" id="" onchange="checkRequired();"
+                                                        <input type="hidden" name="genre_id" value="{{ $genre->id_list }}">
+                                                        <input class="form-check-input {genres[]:true} @error('genres') is-invalid @enderror'" type="checkbox"
+                                                            value="{{ $genre->genre_list }}" name="genres[]" id="{{ $genre->genre_list }}" {{ (is_array(old('genres')) && in_array($genre->genre_list, old('genres'))) ? 'checked' : '' }} onchange="checkRequired();"
                                                             required>
-                                                        <label class="form-check-label" for="">
-
+                                                        <label class="form-check-label" for="{{ $genre->genre_list }}">
+                                                            {{ $genre->genre_list }}
                                                         </label>
                                                     </div>
                                                 </div>
+                                                @endforeach
+                                                    @error('genres')
+                                                    <p class="text-danger" style="font-size: 14px; margin: 0px">The genre must be at least 1 selected.</p>
+                                                    @enderror
                                                 <a href="add-genre.php" style="text-decoration: none;"><svg
                                                         xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         fill="currentColor" class="bi bi-plus-square-fill"
@@ -99,16 +99,19 @@
                                         <div class="row mb-3">
                                             <label for="trailer" class="form-label form-label-sm">Trailer</label>
                                             <div class="col-10">
-                                                <input type="text" class="form-control form-control-sm" name="trailer"
-                                                    placeholder="https://youtube.com" id="trailer" required>
+                                                <input type="text" class="form-control form-control-sm @error('trailer') is-invalid @enderror" name="trailer"
+                                                    placeholder="https://youtube.com" id="trailer" required value="{{ old('trailer') }}">
+                                                @error('trailer')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-1">
-                                    <div class="vr" style="height: 450px;"></div>
-                                </div>
-                                <div class="col-4">
+                                <div class="line" style="width: 0px; border-left: 1px solid #adb5bd"></div>
+                                <div class="col-5">
                                     <div class="row mb-3">
                                         <label for="dates" class="form-label form-label-sm">Release Date</label>
                                         <div class="col-2">
@@ -121,9 +124,14 @@
                                                         d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
                                                 </svg></label>
                                         </div>
-                                        <div class="col-5">
-                                            <input type="date" class="form-control form-control-sm" name="release_date"
-                                                id="dates" required>
+                                        <div class="col-4">
+                                            <input type="date" class="form-control form-control-sm @error('release_date') is-invalid @enderror" name="release_date"
+                                                id="dates" required  value="{{ old('release_date') }}">
+                                            @error('release_date')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -131,8 +139,13 @@
                                         <div class="row mb-3">
                                             <label for="runtime" class="form-label form-label-sm">Duration Film</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control form-control-sm" name="runtime"
-                                                    id="runtime" placeholder="(minute)" maxlength="3" required>
+                                                <input type="text" class="form-control form-control-sm @error('runtime') is-invalid @enderror" name="runtime"
+                                                    id="runtime" placeholder="(minute)" maxlength="3" required value="{{ old('runtime') }}">
+                                                @error('runtime')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                             <div class="col-3">
                                                 <label for="runtime" class="input-group-text btn btn-primary btn-sm"
@@ -149,11 +162,18 @@
                                         <div class="row mb-3">
                                             <label for="director" class="form-label form-label-sm">Directors</label>
                                             <div class="col-10">
-                                                <select class="form-select form-select-sm" name="director" id="director"
+                                                <select class="form-select form-select-sm @error('director') is-invalid @enderror" name="director" id="director" aria-label=".form-select-sm" required>
                                                     aria-label=".form-select-sm" required>
                                                     <option value="">Select Director</option>
-                                                    <option value=""></option>
+                                                    @foreach($directors as $director)
+                                                    <option value="{{ $director->id }}" {{ ($director->id == old('director') ? 'selected' : 'is_invalid') }}>{{ $director->name_director }}</option>
+                                                    @endforeach
                                                 </select>
+                                                @error('director')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                             <div class="col-2">
                                                 <a href="add-director.php" role="button"><svg
@@ -170,11 +190,18 @@
                                         <div class="row mb-3">
                                             <label for="production" class="form-label form-label-sm">Productions</label>
                                             <div class="col-10">
-                                                <select class="form-select form-select-sm" name="production" id="production"
+                                                <select class="form-select form-select-sm @error('production') is-invalid @enderror" name="production" id="production"
                                                     aria-label=".form-select-sm" required>
                                                     <option value="">Select Production</option>
-                                                    <option value=""></option>
+                                                    @foreach($productions as $production)
+                                                    <option value="{{ $production->id_production }}" {{ ($production->id_production == old('production')) ? 'selected' : '' }}>{{ $production->name_production }}</option>
+                                                    @endforeach
                                                 </select>
+                                                @error('production')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                             </div>
                                             <div class="col-2">
                                                 <a href="add-production.php" role="button"><svg
@@ -194,13 +221,18 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <p class="text-center" class="form-label" for="synopsis">Synopsis</p>
-                                    <textarea class="form-control" id="synopsis" name="synopsis" rows="12" placeholder="synopsis..." required></textarea>
+                                    <textarea class="form-control @error('synopsis') is-invalid @enderror" id="synopsis" name="synopsis" rows="12" placeholder="synopsis..." required>{{ old('synopsis') }}</textarea>
+                                    @error('synopsis')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="d-grid gap-2 col-6 mx-auto">
-                                <button class="btn btn-primary" name="add" type="submit">Save</button>
+                                <button class="btn btn-primary" type="submit">Save</button>
                             </div>
                             <div class="d-grid gap-2 col-6 mx-auto">
                                 <button class="btn btn-danger" type="reset">Reset</button>
@@ -211,4 +243,22 @@
             </div>
         </div>
     </div>
+{{--    <script>--}}
+{{--        (function() {--}}
+{{--            'use strict'--}}
+{{--            var forms = document.querySelectorAll('.needs-validation')--}}
+
+{{--            Array.prototype.slice.call(forms)--}}
+{{--                .forEach(function(form) {--}}
+{{--                    form.addEventListener('submit', function(event) {--}}
+{{--                        if (!form.checkValidity()) {--}}
+{{--                            event.preventDefault()--}}
+{{--                            event.stopPropagation()--}}
+{{--                        }--}}
+
+{{--                        form.classList.add('was-validated')--}}
+{{--                    }, false)--}}
+{{--                })--}}
+{{--        })();--}}
+{{--    </script>--}}
 @endsection

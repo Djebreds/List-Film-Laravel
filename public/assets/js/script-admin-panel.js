@@ -1,15 +1,6 @@
-    
-    // // side bar active link
-    // const currentLocation = location.href;
-    // const menuItem = document.querySelectorAll('#list-item a');
-    // const menuLength = menuItem.length
-    // for (let i = 0; i < menuLength; i++) {
-    //     if (menuItem[i].href === currentLocation) {
-    //         menuItem[i].className = "active"
-    //     }
-    // };
 
-    // bootstrap tooltip
+// bootstrap tooltip
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -30,22 +21,22 @@
     };
 
     // bootstrap validation form
-    (function() {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })();
+    // (function() {
+    //     'use strict'
+    //     var forms = document.querySelectorAll('.needs-validation')
+    //
+    //     Array.prototype.slice.call(forms)
+    //         .forEach(function(form) {
+    //             form.addEventListener('submit', function(event) {
+    //                 if (!form.checkValidity()) {
+    //                     event.preventDefault()
+    //                     event.stopPropagation()
+    //                 }
+    //
+    //                 form.classList.add('was-validated')
+    //             }, false)
+    //         })
+    // })();
 
     // checkbox required
     function checkRequired() {

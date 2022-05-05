@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Directors;
+use App\Models\Film;
+use App\Models\Genre;
+use App\Models\Productions;
 use Illuminate\Http\Request;
 use App\Models\Films;
 use App\Models\Genre_list;
+use Illuminate\Support\Str;
 
 class FilmController extends Controller
 {
@@ -55,13 +60,48 @@ class FilmController extends Controller
 
     public function create()
     {
-        return view('admin.add-film');
+        return view('admin.add-film', ['genres' => Genre_list::all(), 'productions' => Productions::all(), 'directors' => Directors::all()]);
     }
 
 
     public function store(Request $request)
     {
-        //
+//        ddd($request);
+//        return $request->file('picture')->store('uploaded');
+        $validate = $request->validate([
+           'title' => 'required|min:3|max:50',
+            'genres' => 'required',
+            'trailer' => 'required',
+            'runtime' => 'required|min:2|max:4',
+            'release_date' => 'required',
+            'picture' => 'required|image|file|max:1024',
+            'director' => 'required',
+            'production' => 'required',
+            'synopsis' => 'required|min:10'
+        ]);
+
+        $validate['excerpt'] = Str::limit($request->title, 20);
+//        $coba = Films::create($validate);
+//        $test = Films::create(Request::only(
+//            'title',
+//            'trailer',
+//            'runtime',
+//            'release_date',
+//            'synopsis',
+//        ));
+//        Film::create($validate->only('title', 'runtime', 'release_date', 'trailer', 'synopsis'));
+//        Directors::create($validate->only('director'));
+//        Productions::create($validate->only('production'));
+//        Genre::create($validate->only('genre_list'));
+          $result = Films::create($validate);
+//
+//        Directors::create(Request::only('director');
+//        Productions::create(Request::only('production'));
+//        Genre_list::create(Request::only('genre_list'));
+
+        dd($result);
+
+        return redirect('admin.add-film')->with('success', 'Film added successfully.');
     }
 
 
