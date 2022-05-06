@@ -66,7 +66,7 @@ class FilmController extends Controller
 
     public function store(Request $request)
     {
-//        ddd($request);
+
 //        return $request->file('picture')->store('uploaded');
         $validate = $request->validate([
            'title' => 'required|min:3|max:50',
@@ -93,13 +93,22 @@ class FilmController extends Controller
 //        Directors::create($validate->only('director'));
 //        Productions::create($validate->only('production'));
 //        Genre::create($validate->only('genre_list'));
-          $result = Films::create($validate);
+          $result = Films::create([
+              'title' => $validate['title'],
+              'trailer' => $validate['trailer'],
+              'runtime' => $validate['runtime'],
+              'picture' => $validate['picture'],
+              'release_date' => $validate['release_date'],
+              'synopsis' => $validate['synopsis']
+          ]);
+
+
 //
 //        Directors::create(Request::only('director');
 //        Productions::create(Request::only('production'));
 //        Genre_list::create(Request::only('genre_list'));
 
-        dd($result);
+        ddd($result);
 
         return redirect('admin.add-film')->with('success', 'Film added successfully.');
     }

@@ -1,7 +1,18 @@
 @extends('layouts.main-admin')
 @section('title', 'Add Data Film')
 @section('content')
-    <h2>Add data Film</h2>
+    <div class="row">
+        <div class="col-1 text-center" >
+            <button type="button" class="rounded-circle p-2 btn btn-link btn-light" onclick="document.location.href = '{{ url('films') }}'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="#8b9299" viewBox="0 0 512 512">
+                    <path d="M9.375 233.4l128-128c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L109.3 224H480c17.69 0 32 14.31 32 32s-14.31 32-32 32H109.3l73.38 73.38c12.5 12.5 12.5 32.75 0 45.25c-12.49 12.49-32.74 12.51-45.25 0l-128-128C-3.125 266.1-3.125 245.9 9.375 233.4z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <h2>Add data Film</h2>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="card mt-4 border border-4 border-end-0 border-top-1 border-bottom-0 border-start-0 border-primary shadow  mb-2 bg-body rounded mx-auto"
@@ -28,7 +39,7 @@
                     </div>
                     @endif
 
-                    <form action="{{ url('films') }}" method="POST" enctype="multipart/form-data" class="form-control  pt-4 "
+                    <form action="{{ url('/films/add-film') }}" method="POST" enctype="multipart/form-data" class="form-control pt-4 "
                         novalidate>
                         @csrf
                         <div class="row justify-content-center">
@@ -49,7 +60,7 @@
                             </div>
                         </div>
                         <hr>
-                        @method('POST')
+
                         <div class="row justify-content-center">
                             <div class="row">
                                 <div class="col-6">
@@ -85,13 +96,15 @@
                                                     @error('genres')
                                                     <p class="text-danger" style="font-size: 14px; margin: 0px">The genre must be at least 1 selected.</p>
                                                     @enderror
-                                                <a href="add-genre.php" style="text-decoration: none;"><svg
+                                                <a href="add-genre.php" style="text-decoration: none;">
+                                                    <svg
                                                         xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         fill="currentColor" class="bi bi-plus-square-fill"
                                                         viewBox="0 0 20 20">
                                                         <path
                                                             d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                                                    </svg> Add new genre </a>
+                                                    </svg> Add new genre
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -110,21 +123,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="line" style="width: 0px; border-left: 1px solid #adb5bd"></div>
-                                <div class="col-5">
+                                <div class="line" style="width: 0px; border-left: 1px solid #adb5bd; padding: 0px"></div>
+                                <div class="col">
+                                    <div class="row ms-2">
                                     <div class="row mb-3">
                                         <label for="dates" class="form-label form-label-sm">Release Date</label>
-                                        <div class="col-2">
+                                        <div class="col-md-2">
                                             <label for="dates" class="input-group-text btn btn-primary btn-sm"
-                                                aria-describedby="inputGroup-sizing-sm" role="button"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                    fill="currentColor" class="bi bi-calendar-event-fill"
-                                                    viewBox="0 0 18 18">
-                                                    <path
-                                                        d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zm-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
-                                                </svg></label>
+                                                role="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="30" viewBox="0 0 448 512">
+                                                    <path d="M96 32C96 14.33 110.3 0 128 0C145.7 0 160 14.33 160 32V64H288V32C288 14.33 302.3 0 320 0C337.7 0 352 14.33 352 32V64H400C426.5 64 448 85.49 448 112V160H0V112C0 85.49 21.49 64 48 64H96V32zM448 464C448 490.5 426.5 512 400 512H48C21.49 512 0 490.5 0 464V192H448V464zM200 272V328H144C130.7 328 120 338.7 120 352C120 365.3 130.7 376 144 376H200V432C200 445.3 210.7 456 224 456C237.3 456 248 445.3 248 432V376H304C317.3 376 328 365.3 328 352C328 338.7 317.3 328 304 328H248V272C248 258.7 237.3 248 224 248C210.7 248 200 258.7 200 272z"/>
+                                                </svg>
+                                            </label>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-md-4">
                                             <input type="date" class="form-control form-control-sm @error('release_date') is-invalid @enderror" name="release_date"
                                                 id="dates" required  value="{{ old('release_date') }}">
                                             @error('release_date')
@@ -134,8 +146,7 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="col">
+                                    <div class="col-7">
                                         <div class="row mb-3">
                                             <label for="runtime" class="form-label form-label-sm">Duration Film</label>
                                             <div class="col-sm-6">
@@ -214,6 +225,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>

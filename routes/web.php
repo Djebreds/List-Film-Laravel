@@ -14,9 +14,8 @@ Route::get('/', [DashboardController::class, 'index']);
 Route::controller(FilmController::class)->group(function () {
     Route::get('/films', 'index');
     Route::get('/films/add-film', 'create');
-    Route::post('/films', 'store');
+    Route::post('/films/add-film', 'store');
     Route::get('/films/detail-film/{id_film}', 'show');
-
 });
 
 // Genres Route
