@@ -21,7 +21,7 @@
                     Film
                 </div>
                 <div class="card-body">
-                    @if(session()->has('success'))
+                    @if(session('status'))
                     <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>
                         <symbol id='check-circle-fill' fill='currentColor' viewBox='0 0 16 16'>
                             <path
@@ -33,7 +33,7 @@
                             <use xlink:href='#check-circle-fill' />
                         </svg>
                         <div>
-                            {{ session('success') }}<a href='{{ url('films') }}' class='alert-link'>See for more</a>.
+                            {{ session('status') }}<a href='{{ url('films') }}' class='alert-link'>See for more</a>.
                         </div>
                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>
@@ -151,7 +151,7 @@
                                             <label for="runtime" class="form-label form-label-sm">Duration Film</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control form-control-sm @error('runtime') is-invalid @enderror" name="runtime"
-                                                    id="runtime" placeholder="(minute)" maxlength="3" required value="{{ old('runtime') }}">
+                                                    id="runtime" placeholder="(minute)" minlength="2" maxlength="3" required value="{{ old('runtime') }}">
                                                 @error('runtime')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -255,22 +255,4 @@
             </div>
         </div>
     </div>
-{{--    <script>--}}
-{{--        (function() {--}}
-{{--            'use strict'--}}
-{{--            var forms = document.querySelectorAll('.needs-validation')--}}
-
-{{--            Array.prototype.slice.call(forms)--}}
-{{--                .forEach(function(form) {--}}
-{{--                    form.addEventListener('submit', function(event) {--}}
-{{--                        if (!form.checkValidity()) {--}}
-{{--                            event.preventDefault()--}}
-{{--                            event.stopPropagation()--}}
-{{--                        }--}}
-
-{{--                        form.classList.add('was-validated')--}}
-{{--                    }, false)--}}
-{{--                })--}}
-{{--        })();--}}
-{{--    </script>--}}
 @endsection

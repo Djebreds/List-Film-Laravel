@@ -9,11 +9,12 @@
             <div class="container">
                 <div class="row m-3">
                     <div class="hstack gap-3">
+
                         <div class="col-3">
-                            <img src="uploaded/" style="width: 250px; height: 375px" class="rounded image-detail" alt="">
+                            <img src="{{ URL::asset("storage/uploaded/$films->picture") }} " style="width: 250px; height: 375px" class="rounded image-detail" alt="{{ $films->picture }}">
                         </div>
-                        <div class="vr "></div>
-                        <div class="header-detail align-self-start">
+                        <div class="line" style="width: 0px; height: 100%; border-left: 1px solid #adb5bd; padding: 0px"></div>
+                        <div class="header-detail align-self-start ">
                             <div class="col-12">
                                 <p><span class="header-title">{{ $films->title }}</span></p>
                                 <hr class="haer">
@@ -29,6 +30,7 @@
                                 <p>{{ $films->synopsis }}</p>
                             </div>
                         </div>
+
                     </div>
                     <div class="hstack ">
                         <button type="button" class="btn btn-primary ms-auto" onclick="history.back()">Back</button>

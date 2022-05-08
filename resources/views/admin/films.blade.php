@@ -105,7 +105,7 @@
                                     </svg></a>
                                 <div class="btn-group btn-group-sm">
                                     <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-primary dropdown-toggle btn-sm"
+                                        <button type="button" class="btn btn-primary rounded-3 btn-sm"
                                             id="dropdownMenuClickableOutside" data-bs-toggle="dropdown">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                                 fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 18 18">
@@ -133,8 +133,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-5">
-                                                        <a href="#"
-                                                            class="dropdown-item text-center text-primary px-2">No</a>
+                                                        <a class="dropdown-item text-center text-primary px-2">No</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -144,7 +143,7 @@
                                 <div class="vr"></div>
                                 <div class="btn-group btn-group-sm">
                                     <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn btn-danger dropdown-toggle btn-sm"
+                                        <button type="button" class="btn btn-danger rounded-3 btn-sm"
                                             id="dropdownMenuClickableOutside" data-bs-toggle="dropdown">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                                 fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 18 18">
@@ -172,8 +171,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-5">
-                                                        <a href="#"
-                                                            class="dropdown-item text-center text-primary px-2">No</a>
+                                                        <a class="dropdown-item text-center text-primary px-2">No</a>
                                                     </div>
                                                 </div>
                                             </li>

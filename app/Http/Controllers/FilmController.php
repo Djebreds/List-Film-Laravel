@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Directors;
 use App\Models\Film;
+use App\Models\Films_directors;
+use App\Models\Films_genres;
+use App\Models\Films_productions;
 use App\Models\Genre;
+use App\Models\Genres_films;
 use App\Models\Productions;
 use Illuminate\Http\Request;
 use App\Models\Films;
 use App\Models\Genre_list;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class FilmController extends Controller
 {
@@ -66,51 +71,75 @@ class FilmController extends Controller
 
     public function store(Request $request)
     {
-
-//        return $request->file('picture')->store('uploaded');
         $validate = $request->validate([
            'title' => 'required|min:3|max:50',
             'genres' => 'required',
-            'trailer' => 'required',
-            'runtime' => 'required|min:2|max:4',
+            'trailer' => ['required','url','regex:/^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"\']*)/i'],
+            'runtime' => 'required|numeric',
             'release_date' => 'required',
-            'picture' => 'required|image|file|max:1024',
+            'picture' => 'required|image|file|mimes:jpg,png,jpeg|max:1024',
             'director' => 'required',
             'production' => 'required',
             'synopsis' => 'required|min:10'
         ]);
 
-        $validate['excerpt'] = Str::limit($request->title, 20);
-//        $coba = Films::create($validate);
-//        $test = Films::create(Request::only(
-//            'title',
-//            'trailer',
-//            'runtime',
-//            'release_date',
-//            'synopsis',
-//        ));
-//        Film::create($validate->only('title', 'runtime', 'release_date', 'trailer', 'synopsis'));
-//        Directors::create($validate->only('director'));
-//        Productions::create($validate->only('production'));
-//        Genre::create($validate->only('genre_list'));
-          $result = Films::create([
-              'title' => $validate['title'],
-              'trailer' => $validate['trailer'],
-              'runtime' => $validate['runtime'],
-              'picture' => $validate['picture'],
-              'release_date' => $validate['release_date'],
-              'synopsis' => $validate['synopsis']
-          ]);
+        // *******
+//         Used for public user to show title films
 
+//        $validate['excerpt'] = Str::limit($request->title, 30, '...');
+//        $get = DB::table('films')->get('title')->first();
+//        $validate['excerpt'] = Str::limit($get->title, 20, '...');
+//        ddd($validate['excerpt']);
 
-//
-//        Directors::create(Request::only('director');
-//        Productions::create(Request::only('production'));
-//        Genre_list::create(Request::only('genre_list'));
+        // ******
 
-        ddd($result);
+        // merging genre
+        $merge_genre = implode(", ", $validate['genres']);
+        // validation url trailer
+        $regex = '/(?:https?:)?(?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*?[^\w\s-])([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/';
+        $get_trailer = $request->input('trailer');
+        preg_match($regex, $get_trailer, $result);
+        $trailer = isset($result[1]) ? $result[1] : null;
+        $validate_trailer = "https://youtube.com/embed/" . $trailer;
 
-        return redirect('admin.add-film')->with('success', 'Film added successfully.');
+//         films inserting
+        // uploading picture
+        $request->file('picture')->store('uploaded');
+
+        $result = Films::create([
+            'title' => $validate['title'],
+            'trailer' => $validate_trailer,
+            'runtime' => $validate['runtime'],
+            'picture' => $request->file('picture')->hashName(),
+            'release_date' => $validate['release_date'],
+            'synopsis' => $validate['synopsis']
+        ]);
+
+//         merge genre inserting
+        Genres_films::create([
+            'genre_name' => $merge_genre
+        ]);
+
+        // get last_id from every tables
+        $last_id_film = DB::table('films')->latest('id_film')->first();
+        $last_id_genres_film = DB::table('genres_films')->latest('genre_id')->first();
+
+        Films_genres::create([
+            'film_id' =>  $last_id_film->id_film,
+            'genre_id' => $last_id_genres_film->genre_id
+        ]);
+
+        Films_productions::create([
+            'film_id' => $last_id_film->id_film,
+            'production_id' => $validate['production']
+        ]);
+
+        Films_directors::create([
+            'film_id' => $last_id_film->id_film,
+            'directors_id' => $validate['director']
+        ]);
+
+        return back()->with('status', 'Film added successfully.');
     }
 
 
@@ -122,6 +151,7 @@ class FilmController extends Controller
             ->join('genres_films', 'genres_films.genre_id', '=', 'films_genres.genre_id')
             ->join('productions', 'productions.id_production', '=', 'films_productions.production_id')
             ->join('directors', 'directors.id', '=', 'films_directors.directors_id')
+            ->get()
             ->find($id_film);
         return view('admin.detail-film', compact('films'));
     }
