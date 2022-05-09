@@ -5,6 +5,16 @@
     box-sizing: border-box;
 }
 
+body {
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    height: 500px;
+    background-color: #ffffff;
+
+}
+
 .card {
     position: relative;
     border-radius: 30px;
@@ -41,6 +51,7 @@ label {
 }
 
 .svg-3 {
+    background-image: url("../img/home-img.png");
     position: absolute;
     z-index: -3;
     left: 60%;
@@ -50,9 +61,36 @@ label {
 }
 
 .register {
-    border-radius: 25px;
-    width: 9.4rem;
+    font-size: 12px;
+    margin: 5px;
 }
+
+.register a {
+    text-decoration: none;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon svg {
+    position: absolute;
+    pointer-events: none;
+    left: 15px;
+    top: 6px;
+    font-size: 22px;
+    z-index: 5;
+}
+
+.form-control{
+    position: relative;
+    padding-left: 45px !important;
+}
+
+/*form svg {*/
+/*    position: absolute;*/
+/*    */
+/*}*/
 
 .login {
     border-radius: 25px;
@@ -86,4 +124,25 @@ label {
     padding: 15px;
     height: 50px;
     font-size: 13px;
+}
+
+footer {
+    background-color: #428af5;
+}
+
+
+
+@media  screen and (max-width: 766px) {
+    .intro {
+        display: none;
+    }
+    .svg-3 {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 766px) {
+    section {
+        min-height: 80vh;
+    }
 }

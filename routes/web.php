@@ -6,9 +6,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\ProductionController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+
 
 // * Routing for admin * //
 Route::get('/', [DashboardController::class, 'index']);
+
+// Register Route
+Route::get('/register', [RegisterController::class, 'index']);
+
+
+// Login Route
+Route::get('/login', [LoginController::class, 'index']);
 
 // Films Route
 Route::controller(FilmController::class)->group(function () {
@@ -24,7 +34,6 @@ Route::controller(GenreController::class)->group(function(){
     Route::get('/genres/add-genre', 'create');
     Route::post('/genres/add-genre', 'store');
 });
-
 
 // Productions Route
 Route::controller(ProductionController::class)->group(function () {

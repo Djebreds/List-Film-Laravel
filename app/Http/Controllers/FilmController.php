@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Directors;
-use App\Models\Film;
 use App\Models\Films_directors;
 use App\Models\Films_genres;
 use App\Models\Films_productions;
-use App\Models\Genre;
 use App\Models\Genres_films;
 use App\Models\Productions;
 use Illuminate\Http\Request;
@@ -49,7 +47,6 @@ class FilmController extends Controller
 
     public function search(Request $request)
     {
-        // ->get(['films.id_film', 'films.picture', 'films.title', 'genres_films.genre_name', 'productions.name_production', 'films.release_date', 'directors.name_director', 'films.trailer']);
         $search = $request->search;
 
         $films = Films::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
@@ -139,7 +136,7 @@ class FilmController extends Controller
             'directors_id' => $validate['director']
         ]);
 
-        return back()->with('status', 'Film added successfully.');
+        return back()->with('status', 'Film added successfully! ');
     }
 
 
