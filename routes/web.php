@@ -9,6 +9,9 @@ use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 
+// testing
+Route::get('testing/films', [FilmController::class, 'store'])->name('films.create');
+
 
 // * Routing for admin * //
 Route::get('/', [DashboardController::class, 'index']);

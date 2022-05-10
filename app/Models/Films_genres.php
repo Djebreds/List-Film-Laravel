@@ -10,4 +10,8 @@ class Films_genres extends Model
     public $timestamps = false;
     protected $guarded = [];
     use HasFactory;
+
+    // testing
+    protected $table = 'films_genres';
+    protected $fillable = ['film_id'];
 }

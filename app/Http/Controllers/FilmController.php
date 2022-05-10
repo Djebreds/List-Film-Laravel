@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 class FilmController extends Controller
 {
-
     public function index()
     {
         $films = Films::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
@@ -65,9 +64,13 @@ class FilmController extends Controller
         return view('admin.add-film', ['genres' => Genre_list::all(), 'productions' => Productions::all(), 'directors' => Directors::all()]);
     }
 
+    public function test() {
+        
+    }
 
     public function store(Request $request)
     {
+
         $validate = $request->validate([
            'title' => 'required|min:3|max:50',
             'genres' => 'required',

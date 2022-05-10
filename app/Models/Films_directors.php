@@ -10,4 +10,9 @@ class Films_directors extends Model
     public $timestamps = false;
     protected $guarded = [];
     use HasFactory;
+
+
+    // testing
+    protected $table = 'films_directors';
+    protected $fillable = ['film_id'];
 }
