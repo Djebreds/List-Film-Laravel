@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DirectorController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Route;
 
 
 // * Routing for admin * //
@@ -18,7 +18,8 @@ Route::get('/register', [RegisterController::class, 'index']);
 
 
 // Login Route
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login/login', [LoginController::class, 'index']);
+Route::post('/login/login', [LoginController::class, 'store']);
 
 // Films Route
 Route::controller(FilmController::class)->group(function () {
@@ -29,7 +30,7 @@ Route::controller(FilmController::class)->group(function () {
 });
 
 // Genres Route
-Route::controller(GenreController::class)->group(function(){
+Route::controller(GenreController::class)->group(function () {
     Route::get('/genres', 'index');
     Route::get('/genres/add-genre', 'create');
     Route::post('/genres/add-genre', 'store');
@@ -37,7 +38,7 @@ Route::controller(GenreController::class)->group(function(){
 
 // Productions Route
 Route::controller(ProductionController::class)->group(function () {
-    Route::get('/productions',  'index');
+    Route::get('/productions', 'index');
     Route::get('/productions/add-production', 'create');
     Route::post('/productions/add-production', 'store');
 });
@@ -63,3 +64,6 @@ Route::get('/film', function () {
 Route::get('/about', function () {
     return view('public-user.about-page');
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
