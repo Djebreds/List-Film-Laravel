@@ -28,8 +28,55 @@ section {
     margin-left: 30px;
 }
 
+/*.side-nav a {*/
+/*    color: #696969;*/
+/*    border-radius: 10px;*/
+/*}*/
+
+/*.side-nav a:hover {*/
+/*    color: white;*/
+/*    border-radius: 10px;*/
+/*    background-color: #428af5;*/
+/*}*/
+
+/*.side-nav .active-page {*/
+/*    color: white;*/
+/*    border-radius: 10px;*/
+/*    background-color: #428af5;*/
+/*}*/
+
+/*.side-nav .link-item {*/
+/*    cursor: pointer;*/
+/*    background-color: #428af5;*/
+/*    border-radius: 10px;*/
+/*    color: white;*/
+/*}*/
+
+/*.side-nav a:hover, .link-item:hover {*/
+/*    cursor: pointer;*/
+/*    background-color: #428af5;*/
+/*    border-radius: 10px;*/
+/*    color: white;*/
+/*}*/
+
+
 .side-nav a {
-    color: #696969;
+    border-radius: 10px;
+}
+
+.side-nav a:hover {
+    background-color: #428af5;
+    border-radius: 10px;
+    color: white;
+    transition: 0.5s;
+}
+
+.side-nav .active-page {
+    background-color: #428af5;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.5ms;
+    color: white;
 }
 
 .top-film {
@@ -106,6 +153,12 @@ section {
 .pagination {
     margin-top: 1rem;
     font-size: 12px;
+}
+
+/*  update    */
+
+.nav-link {
+    padding: 5px;
 }
 
 .nav-item {
@@ -198,4 +251,90 @@ section {
 
 .card-about {
     font-size: 15px;
+}
+
+#responsive {
+    display: none;
+}
+
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon svg {
+    position: absolute;
+    pointer-events: none;
+    right: 15px;
+    top: 6px;
+    font-size: 22px;
+    z-index: 5;
+}
+
+.form-control {
+    position: relative;
+    padding-right: 45px !important;
+}
+
+.navbar.responsive-tabs {
+    display: none;
+}
+
+/* media query */
+@media screen and (max-device-width: 480px)
+and (orientation: portrait) {
+    .side-nav {
+        display: none;
+    }
+
+    #link {
+        display: none;
+    }
+
+
+    #responsive {
+        display: block;
+        align-self: center;
+    }
+
+    form {
+        position: relative;
+        clear: both;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .navbar .nav-link {
+        color: #6b7280;
+    }
+
+    .navbar.responsive-tabs {
+        display: block;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        color: #6b7280;
+        font-size: 13px;
+
+
+    }
+
+    .navbar.responsive-tabs .active-page {
+        color: #428af5;
+    }
+
+    .navbar.responsive-tabs:hover {
+        font-size: 13px;
+    }
+
+    /*.navbar > .container, .navbar > .container-fluid, .navbar > .container-lg, .navbar > .container-md, .navbar > .container-sm, .navbar > .container-xl, .navbar > .container-xxl {*/
+    /*    display: block;*/
+    /*    flex-wrap: inherit;*/
+    /*    align-items: center;*/
+    /*    justify-content: space-between;*/
+    /*}*/
+
 }

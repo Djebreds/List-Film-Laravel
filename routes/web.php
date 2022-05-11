@@ -22,7 +22,7 @@ Route::get('/list-film', function () {
 
 Route::get('/film', function () {
     return view('public-user.film-page');
-})->name('films');
+})->name('film');
 
 Route::get('/about', function () {
     return view('public-user.about-page');
