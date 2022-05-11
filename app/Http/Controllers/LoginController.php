@@ -2,11 +2,60 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index() {
+    public function index()
+    {
+        if ($user = Auth::user()) {
+            if ($user->role == User::ROLE_USER) {
+                return redirect()->intended(route('landing-page'));
+            } else if ($user->role == User::ROLE_ADMIN) {
+                return redirect()->intended(route('dashboard'));
+            }
+        }
         return view('admin.authenticate.login');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $remember = $request->has('remember') ? true : false;
+        $validation = $request->validate([
+            'email' => ['required', 'string', 'email:dns'],
+            'password' => ['required', 'string', 'min:5']
+        ]);
+
+        if (Auth::attempt($validation, $remember)) {
+            $user = Auth::user();
+            if ($user->role == User::ROLE_ADMIN) {
+                $request->session()->regenerate();
+                return redirect()->intended(route('dashboard'));
+            } else if ($user->role == User::ROLE_USER) {
+                $request->session()->regenerate();
+                return redirect()->intended(route('landing-page'));
+            }
+            return redirect(route('landing-page'));
+        }
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect(route('login'));
+    }
+
+    public function profile()
+    {
+        return view('admin.authenticate.profile');
     }
 }
