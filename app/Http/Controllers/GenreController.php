@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Genre_list;
-use Illuminate\Support\Facades\DB;
 
 class GenreController extends Controller
 {
@@ -16,19 +14,19 @@ class GenreController extends Controller
     }
 
 
-    public function create()
-    {
-        return view('admin.add-genre');
-    }
+//    public function create()
+//    {
+//        return view('admin.add-genre');
+//    }
 
 
-    public function store(Request $request)
-    {
-        $genre = new Genre_list();
-        $genre->genre_list = $request->input('genre_list');
-        $genre->save();
-        return redirect()->back()->with('status', 'Genre Successfully to added');
-    }
+//    public function store(Request $request)
+//    {
+//        $genre = new Genre_list();
+//        $genre->genre_list = $request->input('genre_list');
+//        $genre->save();
+//        return redirect()->back()->with('status', 'Genre Successfully to added');
+//    }
 
 
     public function show($id)

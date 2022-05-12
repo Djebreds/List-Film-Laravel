@@ -25,7 +25,7 @@
             <div class="row justify-content-center">
                 <div class="btn-group dropend">
                     <a href="{{ route('profile') }}" data-bs-toggle="dropdown" aria-expanded="false"
-                       class="{{ Request::segment(1) === 'profile' ? 'active' : '' }}">
+                       class="{{ Request::segment(2) === 'profile' ? 'active' : '' }}">
                         <img src="{{ URL::asset('assets/img/avatar.png') }}"
                              class="rounded-circle" width="30">
                         <span class="ms-1">{{ auth()->user()->name }} <svg xmlns="http://www.w3.org/2000/svg" width="12"
@@ -52,7 +52,7 @@
             <hr class="hr my-0">
             <div class="dashboard">
                 <a href="{{ route('dashboard') }}"
-                   class="m-1 tables {{ Request::segment(1) === 'dashboard' ? 'active' : '' }}">
+                   class="m-1 tables {{ Request::is('dashboard') ? 'active' : '' }}">
                     <svg
                             xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                             class="bi bi-speedometer2" viewBox="0 0 20 20">
@@ -68,7 +68,7 @@
             <ul class="item-list">
                 <li>
                     <a href="{{ route('films') }}"
-                       class="m-1 tables {{ Request::segment(1) === 'films' ? 'active' : '' }}">
+                       class="m-1 tables {{ Request::segment(2) === 'films' ? 'active' : '' }}">
                         <svg
                                 class="me-1" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                 fill="currentColor" viewBox="0 0 512 512">
@@ -79,7 +79,7 @@
                 </li>
                 <li>
                     <a href="{{ route('productions') }}"
-                       class="m-1 tables {{ Request::segment(1) === 'productions' ? 'active' : '' }}">
+                       class="m-1 tables {{ Request::segment(2) === 'productions' ? 'active' : '' }}">
                         <svg
                                 class="me-1" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                 fill="currentColor" viewBox="0 0 384 512">
@@ -90,7 +90,7 @@
                 </li>
                 <li>
                     <a href="{{ route('genres') }}"
-                       class="m-1 tables {{ Request::segment(1) === 'genres' ? 'active' : '' }}">
+                       class="m-1 tables {{ Request::segment(2) === 'genres' ? 'active' : '' }}">
                         <svg
                                 class="me-1" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                 fill="currentColor" viewBox="0 0 650 512">
@@ -101,7 +101,7 @@
                 </li>
                 <li>
                     <a href="{{ route('directors') }}"
-                       class="m-1 tables {{ Request::segment(1) === 'directors' ? 'active' : '' }}">
+                       class="m-1 tables {{ Request::segment(2) === 'directors' ? 'active' : '' }}">
                         <svg
                                 class="me-1" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                 fill="currentColor" viewBox="0 0 448 512">
@@ -114,12 +114,14 @@
             </ul>
             <div class="logout">
                 <hr class="hr">
-                <div class="row justify-content-center">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
+                <form action="{{ route('logout') }}"
+                      class="mx-auto"
+                      method="POST">
+                    @csrf
+                    <div class="text-center">
                         <button
-                                class="btn btn-danger mt-4 btn-sm rounded-pill link text-white text-center "
-                                style="font-weight:600; width: 150px;">
+                                class="btn btn-danger my-4 button-logout-admin justify-content-center align-items-center align-self-center btn-sm rounded-pill link text-white text-center "
+                                style="font-weight:600; width: 80%;">
                             <svg class="me-2"
                                  xmlns="http://www.w3.org/2000/svg" width="16" fill="currentColor" height="16"
                                  viewBox="0 0 512 512">
@@ -128,8 +130,8 @@
                             </svg>
                             Logout
                         </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

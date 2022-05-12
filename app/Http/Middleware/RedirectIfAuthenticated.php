@@ -27,7 +27,7 @@ class RedirectIfAuthenticated
                 if ($user = Auth::user()) {
                     if ($user->role == User::ROLE_USER) {
 //                        return redirect()->back(); // it will loop
-                        return redirect()->intended(route('landing-page'));
+                        return redirect()->intended(route('home'));
                     } else if ($user->role == User::ROLE_ADMIN) {
                         return redirect()->intended(route('dashboard'));
                     }

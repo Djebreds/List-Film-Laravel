@@ -13,12 +13,17 @@
     height: 100%;
 }
 
+.button-logout-admin button {
+    width: 80% !important;
+}
+
 .logout {
     position: fixed;
     bottom: 0;
     width: 16%;
-    height: 100px;
+    margin: auto;
 }
+
 
 .profile-item .profile {
     color: #696969;

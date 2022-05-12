@@ -82,7 +82,7 @@ label {
     z-index: 5;
 }
 
-.form-control{
+.form-control {
     position: relative;
     padding-left: 45px !important;
 }
@@ -131,11 +131,20 @@ footer {
 }
 
 
+@media screen and (max-width: 766px) {
+    body {
+        overflow-x: hidden !important;
+    }
 
-@media  screen and (max-width: 766px) {
+    .container {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
     .intro {
         display: none;
     }
+
     .svg-3 {
         display: none;
     }

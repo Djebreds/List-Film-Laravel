@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
         if ($user = Auth::user()) {
             if ($user->role == User::ROLE_USER) {
-                return redirect()->intended(route('landing-page'));
+                return redirect()->intended(route('home'));
             } else if ($user->role == User::ROLE_ADMIN) {
                 return redirect()->intended(route('dashboard'));
             }
@@ -36,9 +36,9 @@ class LoginController extends Controller
                 return redirect()->intended(route('dashboard'));
             } else if ($user->role == User::ROLE_USER) {
                 $request->session()->regenerate();
-                return redirect()->intended(route('landing-page'));
+                return redirect()->intended(route('home'));
             }
-            return redirect(route('landing-page'));
+            return redirect(route('home'));
         }
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

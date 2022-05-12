@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Directors;
+use App\Models\Films;
 use App\Models\Films_directors;
 use App\Models\Films_genres;
 use App\Models\Films_productions;
+use App\Models\Genre_list;
 use App\Models\Genres_films;
 use App\Models\Productions;
 use Illuminate\Http\Request;
-use App\Models\Films;
-use App\Models\Genre_list;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 class FilmController extends Controller
@@ -25,6 +24,7 @@ class FilmController extends Controller
             ->join('genres_films', 'genres_films.genre_id', '=', 'films_genres.genre_id')
             ->join('productions', 'productions.id_production', '=', 'films_productions.production_id')
             ->join('directors', 'directors.id', '=', 'films_directors.directors_id')
+            ->latest()
             ->paginate(15);
 
         if (request('search')) {
@@ -69,9 +69,9 @@ class FilmController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-           'title' => 'required|min:3|max:50',
+            'title' => 'required|min:3|max:50',
             'genres' => 'required',
-            'trailer' => ['required','url','regex:/^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"\']*)/i'],
+            'trailer' => ['required', 'url', 'regex:/^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"\']*)/i'],
             'runtime' => 'required|numeric',
             'release_date' => 'required',
             'picture' => 'required|image|file|mimes:jpg,png,jpeg|max:1024',
@@ -122,7 +122,7 @@ class FilmController extends Controller
         $last_id_genres_film = DB::table('genres_films')->latest('genre_id')->first();
 
         Films_genres::create([
-            'film_id' =>  $last_id_film->id_film,
+            'film_id' => $last_id_film->id_film,
             'genre_id' => $last_id_genres_film->genre_id
         ]);
 

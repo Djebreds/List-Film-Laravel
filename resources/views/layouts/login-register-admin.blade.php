@@ -27,7 +27,7 @@
             Film-List
         </a>
         <div class="link ms-auto ">
-            <a href="{{ url('/list-film') }}" class="text-white text-decoration-none fs-6 fw-bold ">
+            <a href="{{ route('home') }}" class="text-white text-decoration-none fs-6 fw-bold ">
                 Public views
                 <svg xmlns="http://www.w3.org/2000/svg" class="mb-2" width="18"
                      fill="currentColor" viewBox="0 0 512 512">
@@ -40,7 +40,7 @@
 </nav>
 
 
-<section class="w-100 py-4 flex-shrink-0">
+<section class="w-100 py-4 flex-shrink-0 overflow-hidden">
     @yield('content')
 </section>
 
@@ -128,8 +128,8 @@
                     using laravel on 28 April 2022.</p>
             </div>
         </div>
-        <p class="text-small text-center text-white">Copyright © Refi Ahmad Fauzan 2022</p>
     </div>
+    <p class="text-small text-center text-white">Copyright © Refi Ahmad Fauzan 2022</p>
 </footer>
 
 
