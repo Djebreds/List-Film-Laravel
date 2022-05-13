@@ -130,7 +130,7 @@
                                             <li>
                                                 <div class="row mx-auto">
                                                     <div class="col-5 ">
-                                                        <a href="update-film.php?id_film=?>"
+                                                        <a href="{{ route('edit-film', $film->id_film) }}"
                                                            class="dropdown-item text-center text-danger px-2">Yes</a>
                                                     </div>
                                                     <div class="col-auto">
@@ -203,32 +203,9 @@
                     </span>
                     <span class="button__text"> Show all </span>
                 </a>
+            @else
+                {{ $films->links('layouts.pagination') }}
             @endif
-
-
-            {{-- @include('pagination.default', ['paginator' => $films])
-            {{ $films->render('pagination::bootstrap-5') }}
-            <div class="row">
-                <nav aria-label="...">
-                    @if ($films->lastPage() > 1)
-                        <ul class="pagination pagination-sm">
-                            <li class="page-item {{ $films->currentPage() == 1 ? 'disabled' : '' }}">
-                                <a class="page-link" href="{{ $films->url(1) }}">Previous</a>
-                            </li>
-                            @for ($i = 1; $i <= $films->currentPage(); $i++)
-                                <li class="page-item {{ $films->currentPage() == $i ? 'active' : '' }}"><a
-                                        class="page-link" href="{{ $films->url($i) }}">{{ $i }}</a>
-                                </li>
-                            @endfor
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    @endif
-                </nav>
-            </div> --}}
-            {{ $films->links('layouts.pagination') }}
-
         </div>
     </div>
 @endsection

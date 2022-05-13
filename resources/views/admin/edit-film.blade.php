@@ -8,7 +8,7 @@
                 <path d="M9.375 233.4l128-128c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L109.3 224H480c17.69 0 32 14.31 32 32s-14.31 32-32 32H109.3l73.38 73.38c12.5 12.5 12.5 32.75 0 45.25c-12.49 12.49-32.74 12.51-45.25 0l-128-128C-3.125 266.1-3.125 245.9 9.375 233.4z"/>
             </svg>
         </button>
-        <h2 class="m-0">Add data Film</h2>
+        <h2 class="m-0">Update data Film</h2>
     </div>
 
     <div class="row">
@@ -38,13 +38,27 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('add-film') }}" method="POST" enctype="multipart/form-data"
-                          class="form-control pt-4 "
+                    <form action="{{ route('update-film', $films->id_film) }}" method="POST"
+                          enctype="multipart/form-data"
+                          class="form-control pt-4"
                           novalidate>
+                        <input type="hidden" name="_method" value="PUT">
                         @csrf
+                        @method('PUT')
                         <div class="row justify-content-center">
-                            <div class="text-center">
-                                <img id="blah" src="http://placehold.it/180" class="img-fluid mt-2 rounded-3" alt="...">
+                            <div class="text-center images">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>New Poster</p>
+                                        <img id="blah" src="http://placehold.it/180" class="img-fluid mt-2 rounded-3"
+                                             alt="...">
+                                    </div>
+                                    <div class="col">
+                                        <p>Old Poster</p>
+                                        <img src="{{ URL::asset("storage/uploaded/$films->picture") }}" id="blah"
+                                             class="img-fluid mt-2 rounded-3" alt="">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-3">
                                 <div class="mb-3 pt-2">
@@ -71,7 +85,7 @@
                                             <input type="text"
                                                    class="form-control form-control-sm @error('title') is-invalid @enderror"
                                                    name="title" id="title"
-                                                   required value="{{ old('title') }}">
+                                                   required value="{{ $films->title }}">
                                             @error('title')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -92,7 +106,7 @@
                                                                    type="checkbox"
                                                                    value="{{ $genre->genre_list }}" name="genres[]"
                                                                    id="{{ $genre->genre_list }}"
-                                                                   {{ (is_array(old('genres')) && in_array($genre->genre_list, old('genres'))) ? 'checked' : '' }} onchange="checkRequired();"
+                                                                   {{ in_array($genre->genre_list, $check = explode(', ', $films->genre_name)) ? 'checked' : '' }} onchange="checkRequired();"
                                                                    required>
                                                             <label class="form-check-label"
                                                                    for="{{ $genre->genre_list }}">
@@ -126,7 +140,7 @@
                                                        class="form-control form-control-sm @error('trailer') is-invalid @enderror"
                                                        name="trailer"
                                                        placeholder="https://youtube.com" id="trailer" required
-                                                       value="{{ old('trailer') }}">
+                                                       value="{{ $films->trailer }}">
                                                 @error('trailer')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -155,7 +169,7 @@
                                                 <input type="date"
                                                        class="form-control form-control-sm @error('release_date') is-invalid @enderror"
                                                        name="release_date"
-                                                       id="dates" required value="{{ old('release_date') }}">
+                                                       id="dates" required value="{{ $films->release_date }}">
                                                 @error('release_date')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -172,7 +186,7 @@
                                                            class="form-control form-control-sm @error('runtime') is-invalid @enderror"
                                                            name="runtime"
                                                            id="runtime" placeholder="(minute)" minlength="2"
-                                                           maxlength="3" required value="{{ old('runtime') }}">
+                                                           maxlength="3" required value="{{ $films->runtime }}">
                                                     @error('runtime')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -201,10 +215,9 @@
                                                     <select class="form-select form-select-sm @error('director') is-invalid @enderror"
                                                             name="director" id="director" aria-label=".form-select-sm"
                                                             required>
-                                                        aria-label=".form-select-sm" required>
                                                         <option value="">Select Director</option>
                                                         @foreach($directors as $director)
-                                                            <option value="{{ $director->id }}" {{ ($director->id == old('director') ? 'selected' : 'is_invalid') }}>{{ $director->name_director }}</option>
+                                                            <option value="{{ $director->id }}" {{ ($director->name_director == $films->name_director ? 'selected' : '') }}>{{ $director->name_director }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('director')
@@ -237,7 +250,7 @@
                                                             aria-label=".form-select-sm" required>
                                                         <option value="">Select Production</option>
                                                         @foreach($productions as $production)
-                                                            <option value="{{ $production->id_production }}" {{ ($production->id_production == old('production')) ? 'selected' : '' }}>{{ $production->name_production }}</option>
+                                                            <option value="{{ $production->id_production }}" {{ ($production->name_production == $films->name_production) ? 'selected' : '' }}>{{ $production->name_production }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('production')
@@ -270,7 +283,7 @@
                                     <p class="text-center" class="form-label" for="synopsis">Synopsis</p>
                                     <textarea class="form-control @error('synopsis') is-invalid @enderror" id="synopsis"
                                               name="synopsis" rows="12" placeholder="synopsis..."
-                                              required>{{ old('synopsis') }}</textarea>
+                                              required>{{ $films->synopsis }}</textarea>
                                     @error('synopsis')
                                     <div class="invalid-feedback">
                                         {{ $message }}

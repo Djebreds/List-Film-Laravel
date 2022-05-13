@@ -46,7 +46,7 @@
                 <div class="mb-3">
                     <label for="joined" class="form-label">Joined</label>
                     <input type="text" class="form-control form-control-sm" id="joined"
-                           value="{{ auth()->user()->created_at }}"
+                           value="{{ date('d-m-Y H:m:s', strtotime(auth()->user()->created_at)) }}"
                            readonly>
                 </div>
             </div>
@@ -62,12 +62,12 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="name" class="form-control form-control-sm" id="name"
-                               value="" name="name" placeholder="{{ auth()->user()->name }}">
+                               value="{{ auth()->user()->name }}" name="name" placeholder="">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
                         <input type="email" class="form-control form-control-sm" id="email"
-                               value="farrelrk4@gmail.com" name="email">
+                               value="{{ auth()->user()->email }}" name="email">
                     </div>
                 </div>
                 <div class="col">

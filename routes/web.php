@@ -62,6 +62,8 @@ Route::middleware(['auth' => 'rolecheck:admin'])->group(function () {
         Route::get('/dashboard/films/add-film', 'create')->name('add-film');
         Route::post('/dashboard/films/add-film', 'store');
         Route::get('/dashboard/films/detail-film/{id_film}', 'show')->name('detail-film');
+        Route::get('/dashboard/films/edit-film/{id_film}', 'edit')->name('edit-film');
+        Route::put('/dashboard/films/edit-film/{id_film}', 'update')->name('update-film');
     });
 
 // Genres Route
