@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Productions extends Model
 {
+    protected $primaryKey = 'id_production';
+    protected $guarded = [];
     use HasFactory;
 }

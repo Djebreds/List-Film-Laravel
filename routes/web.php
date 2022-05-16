@@ -60,10 +60,11 @@ Route::middleware(['auth' => 'rolecheck:admin'])->group(function () {
     Route::controller(FilmController::class)->group(function () {
         Route::get('/dashboard/films', 'index')->name('films');
         Route::get('/dashboard/films/add-film', 'create')->name('add-film');
-        Route::post('/dashboard/films/add-film', 'store');
-        Route::get('/dashboard/films/detail-film/{id_film}', 'show')->name('detail-film');
+        Route::post('/dashboard/films/add-film', 'store')->name('store-film');
+        Route::get('/dashboard/films/detail-film/{films}', 'show')->name('detail-film');
         Route::get('/dashboard/films/edit-film/{id_film}', 'edit')->name('edit-film');
         Route::put('/dashboard/films/edit-film/{id_film}', 'update')->name('update-film');
+        Route::delete('/dashboard/films/{films}', 'destroy')->name('delete-film');
     });
 
 // Genres Route
@@ -75,14 +76,22 @@ Route::middleware(['auth' => 'rolecheck:admin'])->group(function () {
     Route::controller(ProductionController::class)->group(function () {
         Route::get('dashboard/productions', 'index')->name('productions');
         Route::get('dashboard/productions/add-production', 'create')->name('add-production');
-        Route::post('dashboard/productions/add-production', 'store');
+        Route::post('dashboard/productions/add-production', 'store')->name('store-production');
+//        Route::get('dashboard/production/detail-production/{productions}', 'show')->name('detail-production');
+        Route::get('dashboard/production/edit-production/{productions}', 'edit')->name('edit-production');
+        Route::put('dashboard/production/edit-production/{productions}', 'update')->name('update-production');
+        Route::delete('dashboard/production/{productions}', 'destroy')->name('delete-production');
     });
 
 // Directors Route
     Route::controller(DirectorController::class)->group(function () {
         Route::get('dashboard/directors', 'index')->name('directors');
         Route::get('dashboard/directors/add-director', 'create')->name('add-director');
-        Route::post('dashboard/directors/add-director', 'store');
+        Route::post('dashboard/directors/add-director', 'store')->name('store-director');
+        Route::get('dashboard/directors/detail-director/{directors}', 'show')->name('detail-director');
+        Route::get('dashboard/directors/edit-director/{directors}', 'edit')->name('edit-director');
+        Route::put('dashboard/directors/edit-director/{directors}', 'update')->name('update-director');
+        Route::delete('dashboard/directors/{directors}', 'destroy')->name('delete-director');
     });
 });
 

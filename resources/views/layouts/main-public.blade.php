@@ -43,7 +43,7 @@
         @auth
             <div class="login-sm hstack gap-2">
                 <a id="link"
-                   class="text-white text-decoration-none fw-bold hstack gap-2" style="font-size: 14px">
+                   class="text-primary text-decoration-none fw-bold hstack gap-2" style="font-size: 14px">
                     <div class="btn-group profile">
                         <a class="dropdown-toggle drop" data-bs-toggle="dropdown"
                            data-bs-display="static" aria-expanded="false">
@@ -76,9 +76,9 @@
             </div>
         @else
             <div class="hstack gap-3 login-sm">
-                <a href="{{ route('login') }}" class="text-white text-decoration-none">Login</a>
+                <a href="{{ route('login') }}" class="text-primary text-decoration-none">Login</a>
                 <div class="vr align-self-center " style="height: 25px; color: ;"></div>
-                <a href="{{ route('register') }}" class="text-white text-decoration-none">Register</a>
+                <a href="{{ route('register') }}" class="text-primary text-decoration-none">Register</a>
             </div>
         @endauth
         <form action="" method="POST" class="search-input">
@@ -96,9 +96,9 @@
         @auth
             <div class="hstack gap-2 login-lg">
                 <a id="link"
-                   class="text-white text-decoration-none fw-bold hstack gap-2" style="font-size: 14px">
+                   class="text-primary text-decoration-none fw-bold hstack gap-2" style="font-size: 14px">
                     <div class="btn-group profile">
-                        <a class="dropdown-toggle drop" data-bs-toggle="dropdown"
+                        <a class="dropdown-toggle drop text-primary" data-bs-toggle="dropdown"
                            data-bs-display="static" aria-expanded="false">
                             {{ auth()->user()->name }}
                         </a>

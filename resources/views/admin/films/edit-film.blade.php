@@ -1,5 +1,5 @@
 @extends('layouts.main-admin')
-@section('title', 'Add Data Film')
+@section('title', 'Update Data Film')
 @section('content')
     <div class="hstack gap-4">
         <button type="button" class="rounded-circle p-2 btn btn-link btn-light"
@@ -43,6 +43,7 @@
                           class="form-control pt-4"
                           novalidate>
                         <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" name="oldPicture" value="{{ $films->picture }}">
                         @csrf
                         @method('PUT')
                         <div class="row justify-content-center">
@@ -56,7 +57,8 @@
                                     <div class="col">
                                         <p>Old Poster</p>
                                         <img src="{{ URL::asset("storage/uploaded/$films->picture") }}" id="blah"
-                                             class="img-fluid mt-2 rounded-3" alt="">
+                                             class="img-fluid mt-2 rounded-3"
+                                             alt="{{ URL::asset("storage/uploaded/$films->picture") }}">
                                     </div>
                                 </div>
                             </div>
@@ -279,7 +281,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="mb-3">
+                                <div class="mb-2">
                                     <p class="text-center" class="form-label" for="synopsis">Synopsis</p>
                                     <textarea class="form-control @error('synopsis') is-invalid @enderror" id="synopsis"
                                               name="synopsis" rows="12" placeholder="synopsis..."
@@ -294,10 +296,23 @@
                         </div>
                         <div class="row">
                             <div class="d-grid gap-2 col-6 mx-auto">
-                                <button class="btn btn-primary" type="submit">Save</button>
+                                <button class="btn btn-primary" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-1 me-2" fill="currentColor"
+                                         width="15" viewBox="0 0 512 512">
+                                        <path d="M421.7 220.3L188.5 453.4L154.6 419.5L158.1 416H112C103.2 416 96 408.8 96 400V353.9L92.51 357.4C87.78 362.2 84.31 368 82.42 374.4L59.44 452.6L137.6 429.6C143.1 427.7 149.8 424.2 154.6 419.5L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3zM492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75z"/>
+                                    </svg>
+                                    Update
+                                </button>
                             </div>
                             <div class="d-grid gap-2 col-6 mx-auto">
-                                <button class="btn btn-danger" type="reset">Reset</button>
+                                <button class="btn btn-danger" type="reset">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mb-1 me-2" fill="currentColor"
+                                         width="15"
+                                         viewBox="0 0 448 512">
+                                        <path d="M284.2 0C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2zM31.1 128H416L394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128zM207 199L127 279C117.7 288.4 117.7 303.6 127 312.1C136.4 322.3 151.6 322.3 160.1 312.1L199.1 273.9V408C199.1 421.3 210.7 432 223.1 432C237.3 432 248 421.3 248 408V273.9L287 312.1C296.4 322.3 311.6 322.3 320.1 312.1C330.3 303.6 330.3 288.4 320.1 279L240.1 199C236.5 194.5 230.4 191.1 223.1 191.1C217.6 191.1 211.5 194.5 207 199V199z"/>
+                                    </svg>
+                                    Reset
+                                </button>
                             </div>
                         </div>
                     </form>

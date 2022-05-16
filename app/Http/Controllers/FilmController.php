@@ -12,6 +12,7 @@ use App\Models\Genres_films;
 use App\Models\Productions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FilmController extends Controller
 {
@@ -24,7 +25,7 @@ class FilmController extends Controller
             ->join('genres_films', 'genres_films.genre_id', '=', 'films_genres.genre_id')
             ->join('productions', 'productions.id_production', '=', 'films_productions.production_id')
             ->join('directors', 'directors.id', '=', 'films_directors.directors_id')
-            ->latest('updated_at', 'created_at')
+            ->latest('films.updated_at', 'films.created_at')
             ->paginate(15);
 
         if (request('search')) {
@@ -42,27 +43,13 @@ class FilmController extends Controller
                 ->paginate(15);
         }
 
-        return view('admin.films', compact('films'));
+        return view('admin.films.films', compact('films'));
     }
 
-    public function search(Request $request)
-    {
-        $search = $request->search;
-
-        $films = Films::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
-            ->join('films_productions', 'films.id_film', '=', 'films_productions.film_id')
-            ->join('films_directors', 'films.id_film', '=', 'films_directors.film_id')
-            ->join('genres_films', 'genres_films.genre_id', '=', 'films_genres.genre_id')
-            ->join('productions', 'productions.id_production', '=', 'films_productions.production_id')
-            ->join('directors', 'directors.id', '=', 'films_directors.directors_id')
-            ->where('films.title', 'like', $search . '%', 'or', 'geres_films.genre_name', 'like', '%' . $search, 'or', 'films.release_date', 'like', '%' . $search, 'or', 'productions.name_production', 'like', '%' . $search)
-            ->paginate();
-        return view('admin.films', compact('films'));
-    }
 
     public function create()
     {
-        return view('admin.add-film', ['genres' => Genre_list::all(), 'productions' => Productions::all(), 'directors' => Directors::all()]);
+        return view('admin.films.add-film', ['genres' => Genre_list::all(), 'productions' => Productions::all(), 'directors' => Directors::all()]);
     }
 
 
@@ -140,7 +127,7 @@ class FilmController extends Controller
     }
 
 
-    public function show($id_film)
+    public function show(Films $films)
     {
         $films = Films::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
             ->join('films_productions', 'films.id_film', '=', 'films_productions.film_id')
@@ -149,8 +136,8 @@ class FilmController extends Controller
             ->join('productions', 'productions.id_production', '=', 'films_productions.production_id')
             ->join('directors', 'directors.id', '=', 'films_directors.directors_id')
             ->get()
-            ->find($id_film);
-        return view('admin.detail-film', compact('films'));
+            ->find($films->id_film);
+        return view('admin.films.detail-film', compact('films'));
     }
 
 
@@ -167,12 +154,13 @@ class FilmController extends Controller
         $productions = Productions::all();
         $directors = Directors::all();
         $genres = Genre_list::all();
-        return view('admin.edit-film', compact('genres', 'directors', 'productions', 'films'));
+        return view('admin.films.edit-film', compact('genres', 'directors', 'productions', 'films'));
     }
 
 
     public function update(Request $request, $id_film)
     {
+
         $validate = $request->validate([
             'title' => 'required|min:3|max:50',
             'genres' => 'required',
@@ -192,7 +180,6 @@ class FilmController extends Controller
 //        $get = DB::table('films')->get('title')->first();
 //        $validate['excerpt'] = Str::limit($get->title, 20, '...');
 //        ddd($validate['excerpt']);
-
         // ******
 
 
@@ -207,43 +194,23 @@ class FilmController extends Controller
 
 //         films inserting
         // uploading picture
-
-        if ($request->file($validate['picture'])) {
-            $image = $request->file('picture')->store('uploaded');
+        if ($request->file('picture')) {
+            Storage::delete('/uploaded/' . $request->oldPicture);
+            $request->file('picture')->store('uploaded');
+            $validate['picture'] = $request->file('picture')->hashName();
         } else {
-
+            $validate['picture'] = $request->oldPicture;
         }
 
-//
-
-//        if ($image = $request->file('picture')) {
-//            $request->file('picture')->store('uploaded');
-//        } else {
-//            unset($validate['picture']);
-//        }
-
-        $request->file('picture')->store('uploaded');
-
+        // update films
         $result = Films::where('id_film', $id_film)->update([
             'title' => $validate['title'],
             'trailer' => $validate_trailer,
             'runtime' => $validate['runtime'],
-            'picture' => $request->file('picture')->hashName(),
+            'picture' => $validate['picture'],
             'release_date' => $validate['release_date'],
             'synopsis' => $validate['synopsis']
         ]);
-
-
-        // get last_id from every tables
-//        $last_id_film = DB::table('films')->latest('id_film')->first();
-//        $last_id_genres_film = DB::table('genres_films')->latest('genre_id')->first();
-//        $last_id_genre = DB::table('films_genres')->latest('genre_id');
-
-//        Films_genres::update([
-//            'film_id' => $last_id_film->id_film,
-//            'genre_id' => $last_id_genres_film->genre_id
-//        ])->find($id_film);
-
 
         // merge genre inserting
         Genres_films::where('films_genres.film_id', $id_film)->join('films_genres', 'films_genres.genre_id', '=', 'genres_films.genre_id')->update([
@@ -263,9 +230,11 @@ class FilmController extends Controller
         return back()->with('status', 'Film added successfully! ');
     }
 
-    public
-    function destroy($id)
+    public function destroy(Films $films)
     {
-        //
+        Storage::delete('/uploaded/' . $films->picture);
+        Genres_films::where('films_genres.film_id', $films->id_film)->join('films_genres', 'films_genres.genre_id', '=', 'genres_films.genre_id')->delete();
+        Films::destroy($films->id_film);
+        return redirect()->route('films')->with('status', 'Films has been deleted');
     }
 }
