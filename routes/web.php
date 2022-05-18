@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\FilmController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\RegisterController;
@@ -16,9 +17,13 @@ use Illuminate\Support\Facades\Route;
  * */
 // ********* Routing for guest *********** //
 // Landing Page Views
-Route::get('/home', function () {
-    return view('public-user.landing-page');
-})->name('home');
+//Route::get('/home', function () {
+//    return view('public-user.landing-page');
+//})->name('home');
+
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/home', 'index')->name('home');
+});
 
 Route::get('/film', function () {
     return view('public-user.film-page');

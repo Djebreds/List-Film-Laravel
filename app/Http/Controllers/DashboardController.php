@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Film;
 use App\Models\Directors;
+use App\Models\Film;
 use App\Models\Genre_list;
 use App\Models\Productions;
+use Illuminate\Http\Request;
 
 
 class DashboardController extends Controller
@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $productions = Productions::all()->count();
         $genres = Genre_list::all()->count();
 
-        if (url('/')) {
+        if (route('dashboard')) {
             $films_limit = Film::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
                 ->join('films_productions', 'films.id_film', '=', 'films_productions.film_id')
                 ->join('films_directors', 'films.id_film', '=', 'films_directors.film_id')

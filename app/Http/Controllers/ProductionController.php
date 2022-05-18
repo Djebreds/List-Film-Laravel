@@ -22,19 +22,10 @@ class ProductionController extends Controller
         return view('admin.productions-film.productions', compact('productions'));
     }
 
-
     public function create()
     {
         return view('admin.productions-film.add-production');
     }
-
-//    public function search(Request $request)
-//    {
-//        $search = $request->search;
-//        $productions = Productions::where('name_production', 'like', '%' . $search . '%', 'or', 'founded_date', 'like', '%' . $search . '%')->paginate();
-//        return view('admin.productions-film.productions', compact('productions'));
-//    }
-
 
     public function store(Request $request)
     {
