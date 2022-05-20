@@ -12,6 +12,7 @@ class LandingPageController extends Controller
         define('CURRENTDATE', '2022-01-01');
         define('RECOMEND', '2022-01-01');
         define('POPULAR', ['Interstellar', 'Godzilla vs Kong', 'Joker', 'Avengers End Game', 'Frozen 2', 'Pikachu', 'Brave', 'Aladdin', 'Aquaman']);
+        define('BANNER', ['image image image']);
 
         $populars = Films::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
             ->join('films_productions', 'films.id_film', '=', 'films_productions.film_id')
@@ -57,7 +58,11 @@ class LandingPageController extends Controller
             ->latest('films.updated_at')
             ->paginate(14);
 
-        $colors = ['#fd7e14', '#6610f2', '#6f42c1', '#d63384', '#dc3545', '#fd7e14', '#ffc107', '#198754', '#20c997', '#0dcaf0', '000', '000', '000', '000', '000'];
+////        $validate['excerpt'] = Str::limit($films->title, 30, '...');
+//        $get = DB::table('films')->get('title')->first();
+//        $validate['excerpt'] = Str::limit($get->title, 30, '...');
+//        ddd($validate['excerpt']);
+
         $genres = Genre_list::get();
         if (request('search')) {
             $films = Films::join('films_genres', 'films.id_film', '=', 'films_genres.film_id')
@@ -73,6 +78,6 @@ class LandingPageController extends Controller
                 ->orWhere('directors.name_director', 'like', '%' . request('search') . '%')
                 ->paginate(15);
         }
-        return view('public-user.landing-page', compact('films', 'recomendations', 'populars', 'upcomings', 'genres', 'genres'));
+        return view('public-user.landing-page', compact('films', 'recomendations', 'populars', 'upcomings', 'genres'));
     }
 }

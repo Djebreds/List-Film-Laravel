@@ -1,35 +1,22 @@
 @extends('layouts.main-public')
 @section('title', 'Home')
 @section('content')
-    <header>
-        <h1>Welcome back, Dadang Jebred</h1>
-        <hr>
-    </header>
     <figure>
         <div class="slider">
             <div class="carousel js-flickity"
-                 data-flickity='{ "autoPlay": true, "prevNextButtons": false}'>
-                @for($i = 1; $i < 4; $i++)
+                 data-flickity='{ "autoPlay": true, "prevNextButtons": false, "initialIndex": 1}'>
+                @for($i = 2; $i < 5; $i++)
                     <div class="carousel-cell banner">
                         <div class="card border-0">
-                            <img src="{{ URL::asset('assets/img/banner-page-1.jpeg') }}">
-                            <div class="movies">
-                                <h4>Doctor Strange 2</h4>
-                                <p>Action, fantasi, Adventure</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cum et fuga fugit
-                                    molestias nulla odio saepe! Aliquid assumenda atque consectetur delectus laborum
-                                    odio, possimus quasi repudiandae, tempora, velit vitae! Lorem ipsum dolor sit amet,
-                                    consectetur adipisicing elit. Amet animi blanditiis eaque excepturi id illo
-                                    inventore minus molestias odit officia quam quibusdam repellat saepe sapiente
-                                    tempora temporibus, totam vero voluptates.</p>
-                            </div>
+                            <img class="image" src="{{ URL::asset("assets/img/banner-page-$i.jpeg") }}"
+                                 alt="{{ URL::asset("assets/img/banner-page-$i.jpeg") }}">
                         </div>
                     </div>
                 @endfor
             </div>
+
         </div>
     </figure>
-
     <header class="mt-5">
         <div class="hstack gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#0d6efd"
@@ -42,21 +29,27 @@
     </header>
     <figure class="upcoming">
         <div class="row g-0 justify-content-center">
-            @foreach($populars as $popular)
-                <div class="upcoming-card col-lg-2 col-md-2 col-sm-2 m-1" style="width: 16rem">
-                    <div class="card mt-2 border border-0">
-                        <img src="{{ URL::asset("storage/uploaded/$popular->picture") }}"
-                             style="max-width: 256px; max-height: 128px"
-                             class="rounded-3 card-img-top" alt="{{ $popular->picture }}">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <a href="" class="stretched-link">{{ $popular->title }}</a>
+            <div class="carousel js-flickity"
+                 data-flickity='{ "autoPlay": true, "pageDots": false, "groupCells": true,"prevNextButtons": false, "contain": true}'>
+                @foreach($populars as $popular)
+                    <div class="carousel-cell">
+                        <div class="upcoming-card col-lg-2 col-md-2 col-sm-2 m-1" style="width: 16rem">
+                            <div class="card mt-2 border border-0">
+                                <img src="{{ URL::asset("storage/uploaded/$popular->picture") }}"
+                                     style="max-width: 256px; max-height: 128px"
+                                     class="rounded-3 card-img-top" alt="{{ $popular->picture }}">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <a href=""
+                                           class="stretched-link">{{ Str::limit($popular->title, 30, '...') }}</a>
+                                    </div>
+                                    <p class="card-item">{{ $popular->release_date }} • {{ $popular->genre_name }}</p>
+                                </div>
                             </div>
-                            <p class="card-item">{{ $popular->release_date }} • {{ $popular->genre_name }}</p>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </figure>
     <header>
@@ -71,7 +64,7 @@
     </header>
     <figure>
         <div class="carousel js-flickity"
-             data-flickity='{ "groupCells": 7, "autoPlay": true, "pageDots": false}'>
+             data-flickity='{ "autoPlay": 2000, "pageDots": false, "groupCell": true, "contain": true}'>
             @foreach($upcomings as $upcoming)
                 <div class="carousel-cell">
                     <div class="col-2 m-1" style="width: 9.1rem">
@@ -81,10 +74,12 @@
                                  class="rounded-3 card-img-top" alt="{{ $upcoming->picture }}">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a href="" class="stretched-link">{{ $upcoming->title }}</a>
+                                    <a href=""
+                                       class="stretched-link">{{ Str::limit($upcoming->title, 30, '...') }}</a>
                                 </div>
-                                <p class="card-item">{{ $upcoming->release_date }}
-                                    • {{ $upcoming->genre_name }}</p>
+                                <p class="card-item">{{ $upcoming->release_date }} •
+                                    {{ $upcoming->genre_name }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -92,6 +87,7 @@
             @endforeach
         </div>
     </figure>
+    <hr>
     <figure class="genre">
         <div class="row g-0">
             <div class="carousel js-flickity"
@@ -124,7 +120,7 @@
         <hr>
     </header>
     <figure class="recomended">
-        <div class="row g-0">
+        <div class="row g-0 justify-content-center">
             @foreach($recomendations as $recomended)
                 <div class="col-sm-2 col-lg-3 col-md-4 m-1" style="width: 9.1rem">
                     <div class="card border border-0">
@@ -134,9 +130,8 @@
                              alt="{{ $recomended->picture }}">
                         <div class="card-body">
                             <div class="card-title">
-                                <a href="" class="stretched-link">{{ $recomended->title }}</a>
+                                <a href="" class="stretched-link">{{ Str::limit($recomended->title, 30, '...') }}</a>
                             </div>
-                            {{--                        <p class="card-item"><span class="date"></span></p>--}}
                             <p class="card-item">{{ $recomended->release_date }} • {{ $recomended->genre_name }}</p>
                         </div>
                     </div>

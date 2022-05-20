@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\FilmController;
@@ -25,9 +26,13 @@ Route::controller(LandingPageController::class)->group(function () {
     Route::get('/home', 'index')->name('home');
 });
 
-Route::get('/film', function () {
-    return view('public-user.film-page');
-})->name('film');
+Route::controller(CategoriesController::class)->group(function () {
+    Route::get('/film', 'index')->name('film');
+});
+
+//Route::get('/film', function () {
+//    return view('public-user.film-page');
+//})->name('film');
 
 Route::get('/about', function () {
     return view('public-user.about-page');
