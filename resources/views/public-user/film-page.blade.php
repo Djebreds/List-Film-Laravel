@@ -45,6 +45,11 @@
                  tabindex="0">
                 <form action="" method="" class="my-3">
                     @foreach($genres as $index => $genre)
+                        @if($index == 0)
+                            <button type="submit" class="btn btn-sm button-fillter-genre"
+                                    value="{{ $genre }}"> All
+                            </button>
+                        @endif
                         <button type="submit" class="btn btn-sm button-fillter-genre"
                                 value="{{ $genre->genre_list }}"> {{ $genre->genre_list }}
                         </button>
@@ -62,7 +67,8 @@
                                          alt="{{ $film->picture }}">
                                     <div class="card-body">
                                         <div class="card-title">
-                                            <a href="" class="stretched-link">{{ $film->title }}</a>
+                                            <a href=""
+                                               class="stretched-link">{{ Str::limit($film->title, 30, '...') }}</a>
                                         </div>
                                         <p class="card-item">{{ $film->release_date }} • {{ $film->genre_name }}</p>
                                     </div>
@@ -75,6 +81,11 @@
             <div class="tab-pane fade" id="date-tab-pane" role="tabpanel" aria-labelledby="date-tab" tabindex="0">
                 <form action="" method="" class="my-3">
                     @for($date = 2000; $date <= date('Y'); $date++)
+                        @if($date == 2000)
+                            <button type="submit" class="btn btn-sm button-fillter-genre"
+                                    value="{{ $date }}"> All
+                            </button>
+                        @endif
                         <button type="submit" class="btn btn-sm button-fillter-genre"
                                 value="{{ $date }}"> {{ $date }}
                         </button>
@@ -92,7 +103,8 @@
                                          alt="{{ $film->picture }}">
                                     <div class="card-body">
                                         <div class="card-title">
-                                            <a href="" class="stretched-link">{{ $film->title }}</a>
+                                            <a href=""
+                                               class="stretched-link">{{ Str::limit($film->title, 30, '...') }}</a>
                                         </div>
                                         <p class="card-item">{{ $film->release_date }} • {{ $film->genre_name }}</p>
                                     </div>
@@ -103,9 +115,28 @@
                 </figure>
             </div>
             <div class="tab-pane fade" id="video-tab-pane" role="tabpanel" aria-labelledby="video-tab" tabindex="0">
-                ...
+                <figure>
+                    <div class="row justify-content-center g-0">
+                        @foreach($films as $films)
+                            <div class="upcoming-card col-sm-2 col-md-2 col-lg-2 m-1" style="width: 16rem">
+                                <div class="card mt-2 border border-0">
+                                    <img src="{{ URL::asset("storage/uploaded/$films->picture") }}"
+                                         style="max-width: 256px; max-height: 128px"
+                                         class="rounded-3 card-img-top" alt="{{ $films->picture }}">
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                            <a href=""
+                                               class="stretched-link">{{ Str::limit($films->title, 30, '...') }}</a>
+                                        </div>
+                                        <p class="card-item">{{ $films->release_date }}
+                                            • {{ $films->genre_name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </figure>
             </div>
         </div>
     </section>
-
 @endsection

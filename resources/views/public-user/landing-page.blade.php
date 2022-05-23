@@ -14,7 +14,6 @@
                     </div>
                 @endfor
             </div>
-
         </div>
     </figure>
     <header class="mt-5">
@@ -30,7 +29,7 @@
     <figure class="upcoming">
         <div class="row g-0 justify-content-center">
             <div class="carousel js-flickity"
-                 data-flickity='{ "autoPlay": true, "pageDots": false, "groupCells": true,"prevNextButtons": false, "contain": true}'>
+                 data-flickity='{ "autoPlay": true, "pageDots": false, "groupCells": 1,"prevNextButtons": false, "contain": true}'>
                 @foreach($populars as $popular)
                     <div class="carousel-cell">
                         <div class="upcoming-card col-lg-2 col-md-2 col-sm-2 m-1" style="width: 16rem">
@@ -64,7 +63,7 @@
     </header>
     <figure>
         <div class="carousel js-flickity"
-             data-flickity='{ "autoPlay": 2000, "pageDots": false, "groupCell": true, "contain": true}'>
+             data-flickity='{ "autoPlay": 2000, "pageDots": false, "contain": true}'>
             @foreach($upcomings as $upcoming)
                 <div class="carousel-cell">
                     <div class="col-2 m-1" style="width: 9.1rem">

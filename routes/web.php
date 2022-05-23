@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/home', function () {
 //    return view('public-user.landing-page');
 //})->name('home');
+Route::get('/testing', function () {
+    return view('/testing');
+});
 
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/home', 'index')->name('home');

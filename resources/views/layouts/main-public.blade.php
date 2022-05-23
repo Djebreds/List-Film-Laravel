@@ -311,8 +311,15 @@
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 </script>
 <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+<script>
+    $('.article-feed').infiniteScroll({
+        path: '.pagination__next',
+        append: '.article',
+        status: '.scroller-status',
+        hideNav: '.pagination',
+    });
+</script>
 
 </body>
-
 </html>
