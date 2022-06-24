@@ -84,6 +84,8 @@ Route::middleware(['auth' => 'rolecheck:admin'])->group(function () {
     Route::controller(GenreController::class)->group(function () {
         Route::get('dashboard/genres', 'index')->name('genres');
     });
+//    Route::get('/', [DashboardController::class, 'index']);
+
 
 // Productions Route
     Route::controller(ProductionController::class)->group(function () {

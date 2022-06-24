@@ -13,12 +13,14 @@
                                 @csrf
                                 <h4 class="text-center">Login</h4>
                                 @if(session()->has('status'))
-                                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                             fill="currentColor" aria-label="success" viewBox="0 0 512 512">
-                                            <path d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM371.8 211.8C382.7 200.9 382.7 183.1 371.8 172.2C360.9 161.3 343.1 161.3 332.2 172.2L224 280.4L179.8 236.2C168.9 225.3 151.1 225.3 140.2 236.2C129.3 247.1 129.3 264.9 140.2 275.8L204.2 339.8C215.1 350.7 232.9 350.7 243.8 339.8L371.8 211.8z"/>
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                                         style="font-size: 14px; border-radius: 20px !important;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor"
+                                             class="mb-1 me-1"
+                                             viewBox="0 0 512 512">
+                                            <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM232 152C232 138.8 242.8 128 256 128s24 10.75 24 24v128c0 13.25-10.75 24-24 24S232 293.3 232 280V152zM256 400c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 385.9 273.4 400 256 400z"/>
                                         </svg>
-                                        {{ session('status')  }}
+                                        {{ session('status') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close"></button>
                                     </div>

@@ -14,6 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ URL::asset('assets/img/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('assets/img/favicon.ico') }}">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/style-public-user.css') }}">
 
     <title>@yield('title')</title>
@@ -81,8 +85,7 @@
                 </svg>
                 <input type="text"
                        class="form-control form-control-sm search rounded-pill border-0 "
-                       name="search" id="search" value="{{ request('search') }}"
-                       placeholder="searching">
+                       name="search" id="search" value="{{ request('search') }}" size="40">
             </div>
         </form>
         @auth
@@ -302,8 +305,8 @@
     <p class="text-small text-center text-white"><small>Copyright © Refi Ahmad Fauzan 2022</small></p>
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
-        integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
 </script>
@@ -311,15 +314,6 @@
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 </script>
 <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
-<script>
-    $('.article-feed').infiniteScroll({
-        path: '.pagination__next',
-        append: '.article',
-        status: '.scroller-status',
-        hideNav: '.pagination',
-    });
-</script>
 
 </body>
 </html>

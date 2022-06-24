@@ -40,9 +40,7 @@ class LoginController extends Controller
             }
             return redirect(route('home'));
         }
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return back()->with('status', 'incorrect username or password.');
     }
 
     public function logout(Request $request)
